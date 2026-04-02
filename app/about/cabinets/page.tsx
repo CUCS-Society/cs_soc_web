@@ -13,7 +13,7 @@ function CabinetPreview({ year, name }: CabinetPreviewProps) {
   const index = Number(year) - 1978;
   const ordinal = `${index}th`;
   const href = `/about/cabinets/${year}`;
-  const iconSrc = `/doc/${index}th_${year}/logo_${index}.png`;
+  const iconSrc = `${process.env.__NEXT_BASE_PATH}/doc/${index}th_${year}/logo_${index}.png`;
 
   return (
     <div className="flex items-center gap-4 border p-4 rounded-lg shadow-sm">

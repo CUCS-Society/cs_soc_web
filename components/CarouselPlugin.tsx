@@ -17,9 +17,9 @@ export function CarouselPlugin() {
   )
 
   const banners = [
-    { src: "/banner/2024.png", alt: "2024 banner" },
-    { src: "/banner/2025.png", alt: "2025 banner" },
-    { src: "/banner/2026.png", alt: "2026 banner" },
+    { src: `${process.env.__NEXT_BASE_PATH}/banner/2024.png`, alt: "2024 banner" },
+    { src: `${process.env.__NEXT_BASE_PATH}/banner/2025.png`, alt: "2025 banner" },
+    { src: `${process.env.__NEXT_BASE_PATH}/banner/2026.png`, alt: "2026 banner" },
   ]
 
   return (
