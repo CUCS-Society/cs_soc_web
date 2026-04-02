@@ -5,7 +5,6 @@ import { Post } from "@/lib/PostType"
 import { PostPreviewList } from '@/components/PostPreview'
 import { posts } from '@/lib/seed'
 
-
 export default function Page() {
   return (
       <main className="flex flex-col min-h-screen">
