@@ -27,7 +27,7 @@ const PostPreview = ({ post }: PostPreviewProps) => {
           "select-rounded-md flex w-full rounded-md leading-none no-underline outline-none transition-colors hover:bg-foreground/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         )}
       >
-        <div className="mr-4 flex w-24 shrink-0 items-center justify-center rounded-md bg-primary px-2 py-3 text-xs font-semibold uppercase text-primary-foreground">
+        <div className="mr-4 flex w-24 shrink-0 items-center justify-center rounded-md px-2 py-3 text-xs font-semibold uppercase">
           {category}
         </div>
 
@@ -75,7 +75,7 @@ export function PostPreviewList({ header, posts } : PostPreviewListProps){
               ))}
             </div>
             <Link
-              href="/posts"
+              href="/posts/all"
               className="mt-10 flex items-center py-2 text-sm text-accent-foreground underline-offset-4 hover:text-muted-foreground hover:underline"
             >
               See all posts <ArrowRight className="ml-2 h-4 w-4" />

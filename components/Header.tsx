@@ -143,7 +143,7 @@ export function Header() {
   [
     {
       title: "About", 
-      href: "/about",
+      href: "/about/history-of-cucs",
       children: [
         {
           title: "History",
@@ -179,11 +179,15 @@ export function Header() {
     },
     {
       title: "Documents",
-      href: "/docs",
+      href: "/docs/constitution",
       children: [
         {
           title: "Constitution",
           href: "/docs/constitution"
+        },
+        {
+          title: "Archive",
+          href: "/docs/archive"
         }
       ]
     }

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Gelasio, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -32,7 +34,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}>
         <ThemeProvider>
-        {children}
+          <Header />
+            {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
