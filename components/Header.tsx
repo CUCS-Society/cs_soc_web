@@ -22,7 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { Dictionary } from '@/components/Translation'
 
 interface NavbarContent
 {
@@ -90,28 +90,31 @@ function Navbar({ contents }: NavbarProps) {
   );
 }
 
-function IconName() {
+function IconName({ lang }: { lang: string }) {
+  const t = Dictionary[lang];
+
   return (
       <div className="max-w-4xl mx-auto px-7 py-5">
         <div className="flex items-start justify-between gap-4">
-          <Link href="/" className="flex items-center gap-5 mb-3">
+          <Link href={`/${lang}`} className="flex items-center gap-5 mb-3">
             <div className="w-11 h-11 rounded-lg flex items-center justify-center">
               <span className="font-bold text-sm">CS</span>
             </div>
             <div>
               <h1 className="text-base font-bold">CUCS</h1>
-              <p className="text-xs">Computer Science Society</p>
+              <p className="text-xs">{t.cucs}</p>
             </div>
           </Link>
-          <ModeToggle />
+          <ModeToggle lang={lang} />
         </div>
 
       </div>
   )
 }
 
-export function ModeToggle() {
+export function ModeToggle({ lang }: { lang: string }) {
   const { setTheme } = useTheme()
+  const t = Dictionary[lang];
 
   return (
     <DropdownMenu>
@@ -124,70 +127,71 @@ export function ModeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          {t.light}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          {t.dark}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          {t.system}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
 
-export function Header() {
+export function Header({ lang }: { lang: string }) {
+  const t = Dictionary[lang];
 
   const CS_NavbarContents: NavbarContent[] =
   [
     {
-      title: "About", 
-      href: "/about/history-of-cucs",
+      title: t.about, 
+      href: `/${lang}/about/history-of-cucs`,
       children: [
         {
-          title: "History",
-          href: "/about/history-of-cucs",
+          title: t.history,
+          href: `/${lang}/about/history-of-cucs`,
         },
         {
-          title: "Past Cabinets",
-          href: "/about/cabinets"
+          title: t.pastCabinets,
+          href: `/${lang}/about/cabinets`
         }
       ]
     },
     {
-      title: "News", 
-      href: "/posts/all",
+      title: t.news, 
+      href: `/${lang}/posts/all`,
       children: [
         {
-          title: "Notice",
-          href: "/posts/notice",
+          title: t.notice,
+          href: `/${lang}/posts/notice`,
         },
         {
-          title: "Event",
-          href: "/posts/event"
+          title: t.event,
+          href: `/${lang}/posts/event`
         },
         {
-          title: "College",
-          href: "/posts/college"
+          title: t.college,
+          href: `/${lang}/posts/college`
         },
         { 
-          title: "Other",
-          href: "/posts/other"
+          title: t.other,
+          href: `/${lang}/posts/other`
         }
       ]
     },
     {
-      title: "Documents",
-      href: "/docs/constitution",
+      title: t.documents,
+      href: `/${lang}/docs/constitution`,
       children: [
         {
-          title: "Constitution",
-          href: "/docs/constitution"
+          title: t.constitution,
+          href: `/${lang}/docs/constitution`
         },
         {
-          title: "Archive",
-          href: "/docs/archive"
+          title: t.archive,
+          href: `/${lang}/docs/archive`
         }
       ]
     }
@@ -196,7 +200,7 @@ export function Header() {
 
   return (
     <header className="w-full">
-      <IconName />
+      <IconName lang={lang} />
       <div className="w-full">
         <Navbar contents={CS_NavbarContents}/>
       </div>

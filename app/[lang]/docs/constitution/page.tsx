@@ -3,6 +3,14 @@ import {
   RecursiveAccordionContent,
 } from "@/components/RecursiveAccordion";
 import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
+import { Dictionary } from "@/components/Translation";
+
+
+interface PageProps {
+  params: Promise<{
+    lang: string;
+  }>;
+}
 
 
 const items: DocumentItem[] = [
@@ -539,13 +547,13 @@ const items: DocumentItem[] = [
   },
 ];
 
-const DocumentAccordionLists = () => (
+const DocumentAccordionLists = ({ t }: { t: Record<string, string> }) => (
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
                 <BreadcrumbPlugin
                 items={[
-                    { label: "Home", href: "/" },
-                    { label: "Documents", href: "/docs/constitution"},
-                    { label: "Constitution", href: "/docs/constitution" },
+                    { label: t.home, href: "/" },
+                    { label: t.documents, href: "/docs/constitution"},
+                    { label: t.constitution, href: "/docs/constitution" },
                 ]}
                 />
     
@@ -553,4 +561,8 @@ const DocumentAccordionLists = () => (
     </div>
 );
 
-export default DocumentAccordionLists;
+export default async function Page({ params }: PageProps) {
+  const { lang } = await params;
+  const t = Dictionary[lang];
+  return <DocumentAccordionLists t={t} />;
+}

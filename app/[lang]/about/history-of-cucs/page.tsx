@@ -2,6 +2,13 @@ import { notFound } from "next/navigation";
 import { readFile } from "fs/promises";
 import path from "path";
 import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
+import { Dictionary } from "@/components/Translation";
+
+interface PageProps {
+  params: Promise<{
+    lang: string;
+  }>;
+}
 
 async function getHistoryContent(): Promise<string | null> {
   const filePath = path.join(
@@ -19,7 +26,9 @@ async function getHistoryContent(): Promise<string | null> {
   }
 }
 
-export default async function Page() {
+export default async function Page({ params }: PageProps) {
+  const { lang } = await params;
+  const t = Dictionary[lang];
   const content = await getHistoryContent();
 
   if (!content) {
@@ -30,8 +39,8 @@ export default async function Page() {
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
         <BreadcrumbPlugin
         items={[
-            { label: "Home", href: "/" },
-            { label: "About", href: "/about" },
+            { label: t.home, href: `/${lang}` },
+            { label: t.about, href: `/${lang}/about` },
         ]}
         />
 
