@@ -1,18 +1,29 @@
 model Cabinet {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   year      String
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  en_name   String?
+  zh_name   String?
+  documents Document[]
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
-model DocumentItem {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?  // Store as JSON string or use a relation for nested structures
-  parentId  String?  // For nested items (e.g., children in your accordion)
-  parent    DocumentItem? @relation("DocumentHierarchy", fields: [parentId], references: [id])
-  children  DocumentItem[] @relation("DocumentHierarchy")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Document {
+  id           String    @id @default(cuid())
+  cabinetId    String
+  cabinet      Cabinet   @relation(fields: [cabinetId], references: [id])
+
+  title        String
+  description  String?
+  category     String?   // e.g. "agenda", "minutes", "annual_report", "budget"
+  documentUrl  String    // path or external URL
+  fileType     String?   // e.g. "pdf", "doc", "docx"
+  meetingNo    Int?      // e.g. 1, 2, 3...
+  version      String?   // e.g. "v1", "v2"
+  publishedAt  DateTime?
+  sortOrder    Int?      // optional display ordering
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
