@@ -19,9 +19,9 @@ export default async function Page( { params } : PostProps ) {
             <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
                 <BreadcrumbPlugin
                   items={[
-                      { label: t.home, href: `/${lang}` },
-                      { label: t.news, href: `/${lang}/posts/all`},
-                      { label: t[category], href: `/${lang}/posts/${category}` },
+                      { label: t.home, href: `./..` },
+                      { label: t.news, href: `./all`},
+                      { label: t[category], href: `.` },
                   ]}
                   />
               <PostPreviewList header={t[category]} posts={filteredPosts} />

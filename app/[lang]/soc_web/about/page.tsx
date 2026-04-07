@@ -39,8 +39,8 @@ export default async function Page({ params }: PageProps) {
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
         <BreadcrumbPlugin
         items={[
-            { label: t.home, href: `/${lang}` },
-            { label: t.about, href: `/${lang}/about` },
+            { label: t.home, href: `./..` },
+            { label: t.about, href: `.` },
         ]}
         />
 

@@ -22,7 +22,7 @@ interface CabinetPreviewProps {
 function CabinetPreview({ year, name, t }: CabinetPreviewProps) {
   const index = Number(year) - 1978;
   const ordinal = `${index}th`;
-  const href = `/about/cabinets/${year}`;
+  const href = `/soc_web/about/cabinets/${year}`;
   const iconSrc = `${process.env.__NEXT_BASE_PATH}/doc/${index}th_${year}/logo_${index}.png`;
 
   return (
@@ -71,9 +71,9 @@ export default async function Page({ params }: PageProps) {
         <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
             <BreadcrumbPlugin
             items={[
-                { label: t.home, href: `/${lang}` },
-                { label: t.about, href: `/${lang}/about/history-of-cucs`},
-                { label: t.pastCabinet, href: `/${lang}/about/cabinets` },
+                { label: t.home, href: `./..` },
+                { label: t.about, href: `.`},
+                { label: t.pastCabinets, href: `.` },
             ]}
             />
 

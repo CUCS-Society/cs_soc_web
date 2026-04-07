@@ -197,22 +197,25 @@ const items: DocumentItem[] = [
   },
 ];
 
-const DocumentAccordionLists = ({ t }: { t: Record<string, string> }) => (
+const DocumentAccordionLists = ({ lang }: { lang: string }) => {
+    const t = Dictionary[lang];
+
+    return(
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
                 <BreadcrumbPlugin
                 items={[
-                    { label: t.home, href: "/" },
-                    { label: t.documents, href: "/docs/constitution"},
-                    { label: t.archive, href: "/docs/archive" },
+                    { label: t.home, href: `./..` },
+                    { label: t.documents, href: `.`},
+                    { label: t.archive, href: `.`},
                 ]}
                 />
     
                 <RecursiveAccordionContent items={items}/>
     </div>
-);
+    )
+}
 
 export default async function Page({ params }: PageProps) {
   const { lang } = await params;
-  const t = Dictionary[lang];
-  return <DocumentAccordionLists t={t} />;
+  return <DocumentAccordionLists lang={lang} />;
 }
