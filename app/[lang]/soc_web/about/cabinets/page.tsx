@@ -29,10 +29,9 @@ function CabinetPreview({ year, name, t }: CabinetPreviewProps) {
     <Link href={href}>
       <div className="flex items-center gap-4 border p-4 rounded-lg shadow-sm">
         <div className="relative h-12 w-12">
-          <Image
+          <img
             src={iconSrc}
             alt={`${name}${t.logoAlt}`}
-            fill
             sizes="48px"
             className="object-contain"
           />
