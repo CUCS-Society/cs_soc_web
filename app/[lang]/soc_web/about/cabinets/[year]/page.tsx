@@ -2,9 +2,11 @@ import { notFound } from "next/navigation";
 import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
 import { readFile } from "fs/promises";
 import path from "path";
+import { Dictionary } from "@/components/Translation";
 
 interface CabinetProps {
   params: Promise<{
+    lang: string;
     year: string;
   }>;
 }
@@ -26,7 +28,8 @@ async function getCabinetContent( year : string ): Promise<string | null> {
 }
 
 export default async function Page({ params }  : CabinetProps) {
-    const { year } = await params;
+    const { lang, year } = await params;
+    const t = Dictionary[lang];
     const content = await getCabinetContent(year);
 
   if (!content) {
@@ -37,10 +40,10 @@ export default async function Page({ params }  : CabinetProps) {
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
         <BreadcrumbPlugin
         items={[
-            { label: "Home", href: "/" },
-            { label: "About", href: "/about/history-of-cucs"},
-            { label: "Past Cabinet", href: "/about/cabinets" },
-            { label: year, href: year}
+            { label: t.home, href: `` },
+            { label: t.about, href: `/about/history-of-cucs`},
+            { label: t.pastCabinet, href: `/about/cabinets` },
+            { label: year, href: `/about/cabinets/${year}`}
         ]}
         />
 

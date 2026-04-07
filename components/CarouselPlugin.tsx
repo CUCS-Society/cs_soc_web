@@ -17,9 +17,7 @@ export function CarouselPlugin() {
   )
 
   const banners = [
-    { src: `${process.env.__NEXT_BASE_PATH}/banner/2024.png`, alt: "2024 banner" },
-    { src: `${process.env.__NEXT_BASE_PATH}/banner/2025.png`, alt: "2025 banner" },
-    { src: `${process.env.__NEXT_BASE_PATH}/banner/2026.png`, alt: "2026 banner" },
+    { src: `${process.env.__NEXT_BASE_PATH}/doc/48th_2026/banner.png`, alt: "2026 banner" },
   ]
 
   return (
@@ -35,11 +33,9 @@ export function CarouselPlugin() {
             <div className="p-1">
               <div className="relative w-full overflow-hidden">
                 <div className="relative aspect-[16/9] w-full">
-                  <Image
+                  <img
                     src={banner.src}
                     alt={banner.alt}
-                    fill
-                    priority={index === 0}
                     className="object-cover"
                   />
                 </div>

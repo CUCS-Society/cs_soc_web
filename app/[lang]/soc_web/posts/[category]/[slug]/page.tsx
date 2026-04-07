@@ -7,10 +7,11 @@ import { readFile } from "fs/promises";
 import path from "path";
 import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
 import { posts } from "@/lib/seed";
-
+import { Dictionary } from "@/components/Translation";
 
 interface PostProps {
   params: Promise<{
+    lang: string;
     category: string;
     slug: string;
   }>;
@@ -65,8 +66,9 @@ export async function generateMetadata({ params }: PostProps): Promise<Metadata>
 }
 
 export default async function PostPage({ params }: PostProps) {
-  const { slug, category } = await params;
-  const post = await getPostFromParams(Promise.resolve({ slug, category }));
+  const { lang, slug, category } = await params;
+  const t = Dictionary[lang];
+  const post = await getPostFromParams(Promise.resolve({ lang, slug, category }));
   const content = await getPostContent(post.category, post.slug);
 
   if (!post || !content) {
@@ -77,10 +79,10 @@ export default async function PostPage({ params }: PostProps) {
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
         <BreadcrumbPlugin
         items={[
-            { label: "Home", href: "/" },
-            { label: "Posts", href: "/posts" },
-            { label: category === "all" ? "All" : category },
-            { label: post.title },
+            { label: t.home, href: `` },
+            { label: t.news, href: `/posts/all` },
+            { label: category === "all" ? t.all : category, href: `/posts/${category}` },
+            { label: post.title, href: `/posts/${category}/${slug}` },
         ]}
         />
 

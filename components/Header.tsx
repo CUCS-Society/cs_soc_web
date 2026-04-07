@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/navigation-menu'
 import type { ComponentProps } from 'react'
 
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Languages } from "lucide-react"
 import { useTheme } from "next-themes"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -22,7 +23,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { Dictionary } from '@/components/Translation'
 
 interface NavbarContent
 {
@@ -90,28 +91,34 @@ function Navbar({ contents }: NavbarProps) {
   );
 }
 
-function IconName() {
+function IconName({ lang }: { lang: string }) {
+  const t = Dictionary[lang];
+
   return (
       <div className="max-w-4xl mx-auto px-7 py-5">
         <div className="flex items-start justify-between gap-4">
-          <Link href="/" className="flex items-center gap-5 mb-3">
+          <Link href={`/soc_web`} className="flex items-center gap-5 mb-3">
             <div className="w-11 h-11 rounded-lg flex items-center justify-center">
               <span className="font-bold text-sm">CS</span>
             </div>
             <div>
               <h1 className="text-base font-bold">CUCS</h1>
-              <p className="text-xs">Computer Science Society</p>
+              <p className="text-xs">{t.cucs}</p>
             </div>
           </Link>
-          <ModeToggle />
+          <div className="flex gap-2">
+            <LanguageToggle lang={lang} />
+            <ModeToggle lang={lang} />
+          </div>
         </div>
 
       </div>
   )
 }
 
-export function ModeToggle() {
+export function ModeToggle({ lang }: { lang: string }) {
   const { setTheme } = useTheme()
+  const t = Dictionary[lang];
 
   return (
     <DropdownMenu>
@@ -124,70 +131,100 @@ export function ModeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
+          {t.light}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
+          {t.dark}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
+          {t.system}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
 
-export function Header() {
+export function LanguageToggle({ lang }: { lang: string }) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const switchLanguage = (newLang: string) => {
+    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
+    router.push(newPath);
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button variant="outline" size="icon">
+          <Languages className="h-[1.2rem] w-[1.2rem]" />
+          <span className="sr-only">Switch language</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => switchLanguage("en-US")}>
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => switchLanguage("zh-HK")}>
+          中文
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+export function Header({ lang }: { lang: string }) {
+  const t = Dictionary[lang];
 
   const CS_NavbarContents: NavbarContent[] =
   [
     {
-      title: "About", 
-      href: "/about/history-of-cucs",
+      title: t.about, 
+      href: `/soc_web/about`,
       children: [
         {
-          title: "History",
-          href: "/about/history-of-cucs",
+          title: t.history,
+          href: `/soc_web/about`,
         },
         {
-          title: "Past Cabinets",
-          href: "/about/cabinets"
+          title: t.pastCabinets,
+          href: `/soc_web/about/cabinets`
         }
       ]
     },
     {
-      title: "News", 
-      href: "/posts/all",
+      title: t.news, 
+      href: `/soc_web/posts/all`,
       children: [
         {
-          title: "Notice",
-          href: "/posts/notice",
+          title: t.notice,
+          href: `/soc_web/posts/notice`,
         },
         {
-          title: "Event",
-          href: "/posts/event"
+          title: t.event,
+          href: `/soc_web/posts/event`
         },
         {
-          title: "College",
-          href: "/posts/college"
+          title: t.college,
+          href: `/soc_web/posts/college`
         },
         { 
-          title: "Other",
-          href: "/posts/other"
+          title: t.other,
+          href: `/soc_web/posts/other`
         }
       ]
     },
     {
-      title: "Documents",
-      href: "/docs/constitution",
+      title: t.documents,
+      href: `/soc_web/docs/constitution`,
       children: [
         {
-          title: "Constitution",
-          href: "/docs/constitution"
+          title: t.constitution,
+          href: `/soc_web/docs/constitution`
         },
         {
-          title: "Archive",
-          href: "/docs/archive"
+          title: t.archive,
+          href: `/soc_web/docs/archive`
         }
       ]
     }
@@ -196,7 +233,7 @@ export function Header() {
 
   return (
     <header className="w-full">
-      <IconName />
+      <IconName lang={lang} />
       <div className="w-full">
         <Navbar contents={CS_NavbarContents}/>
       </div>

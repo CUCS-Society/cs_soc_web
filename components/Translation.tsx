@@ -1,0 +1,43 @@
+export type Translations = Record<string, Record<string, string>>;
+export const Dictionary : Translations = {
+  'en-US': {
+    cucs: "Computer Science Society of the Chinese University of Hong Kong",
+    home: "Home",
+    about: "About",
+    history: "History",
+    pastCabinets: "Past Cabinets",
+    cabinet: " Cabinet",
+    news: "News",
+    all: "All",
+    notice: "Notice",
+    event: "Event",
+    college: "College",
+    other: "Other",
+    documents: "Documents",
+    constitution: "Constitution",
+    archive: "Archive",
+    light: "Light",
+    dark: "Dark",
+    system: "System"
+  },
+  'zh-HK': {
+    cucs: "香港中文大學計算機科學系會",
+    home: "首頁",
+    about: "介紹",
+    history: "系會歷史",
+    pastCabinets: "歷屆幹事會",
+    cabinet: " 幹事會",
+    news: "消息",
+    all: "所有消息",
+    notice: "系會公告",
+    event: "活動資訊",
+    college: "書院消息",
+    other: "其他",
+    documents: "檔案",
+    constitution: "會章",
+    archive: "幹事會文件",
+    light: "日",
+    dark: "夜",
+    system: "自動"
+  }
+};
