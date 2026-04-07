@@ -7,20 +7,7 @@ import { readFile } from "fs/promises";
 import path from "path";
 import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
 import { posts } from "@/lib/seed";
-import { Translations } from "@/components/Translation";
-
-const translations: Translations = {
-  'en-US': {
-    home: "Home",
-    posts: "Posts",
-    all: "All",
-  },
-  'zh-HK': {
-    home: "首頁",
-    posts: "文章",
-    all: "全部",
-  }
-};
+import { Dictionary } from "@/components/Translation";
 
 interface PostProps {
   params: Promise<{
@@ -80,8 +67,8 @@ export async function generateMetadata({ params }: PostProps): Promise<Metadata>
 
 export default async function PostPage({ params }: PostProps) {
   const { lang, slug, category } = await params;
-  const t = translations[lang as keyof Translations];
-  const post = await getPostFromParams(Promise.resolve({ slug, category }));
+  const t = Dictionary[lang];
+  const post = await getPostFromParams(Promise.resolve({ lang, slug, category }));
   const content = await getPostContent(post.category, post.slug);
 
   if (!post || !content) {
@@ -93,7 +80,7 @@ export default async function PostPage({ params }: PostProps) {
         <BreadcrumbPlugin
         items={[
             { label: t.home, href: `/${lang}` },
-            { label: t.posts, href: `/${lang}/posts/all` },
+            { label: t.news, href: `/${lang}/posts/all` },
             { label: category === "all" ? t.all : category, href: `/${lang}/posts/${category}` },
             { label: post.title, href: `/${lang}/posts/${category}/${slug}` },
         ]}

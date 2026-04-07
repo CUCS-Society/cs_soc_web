@@ -4,6 +4,13 @@ import { readFile } from "fs/promises";
 import path from "path";
 import { Dictionary } from "@/components/Translation";
 
+interface CabinetProps {
+  params: Promise<{
+    lang: string;
+    year: string;
+  }>;
+}
+
 async function getCabinetContent( year : string ): Promise<string | null> {
   const filePath = path.join(
     process.cwd(),
@@ -35,7 +42,7 @@ export default async function Page({ params }  : CabinetProps) {
         items={[
             { label: t.home, href: `/${lang}` },
             { label: t.about, href: `/${lang}/about/history-of-cucs`},
-            { label: t.pastCabinets, href: `/${lang}/about/cabinets` },
+            { label: t.pastCabinet, href: `/${lang}/about/cabinets` },
             { label: year, href: `/${lang}/about/cabinets/${year}`}
         ]}
         />
