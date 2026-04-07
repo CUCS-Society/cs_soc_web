@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import {
   DocumentItem,
   RecursiveAccordionContent,
@@ -17,8 +15,8 @@ const items: DocumentItem[] = [
         title: "第一次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/1st_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/1st_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/1st_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/1st_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -27,8 +25,8 @@ const items: DocumentItem[] = [
         title: "第二次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/2nd_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/2nd_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/2nd_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/2nd_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -37,8 +35,8 @@ const items: DocumentItem[] = [
         title: "第三次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/3rd_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/3rd_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/3rd_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/3rd_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -47,8 +45,8 @@ const items: DocumentItem[] = [
         title: "第四次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/4th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/4th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/4th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/4th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -57,8 +55,8 @@ const items: DocumentItem[] = [
         title: "第五次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/5th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/5th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/5th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/5th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -67,8 +65,8 @@ const items: DocumentItem[] = [
         title: "第六次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/6th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/6th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/6th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/6th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -77,8 +75,8 @@ const items: DocumentItem[] = [
         title: "第七次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/7th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/7th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/7th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/7th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -87,8 +85,8 @@ const items: DocumentItem[] = [
         title: "第八次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/8th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/8th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/8th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/8th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -97,8 +95,8 @@ const items: DocumentItem[] = [
         title: "第九次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/9th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/9th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/9th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/9th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -107,8 +105,8 @@ const items: DocumentItem[] = [
         title: "第十次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/10th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/10th_GM_minutes_2.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/10th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/10th_GM_minutes_2.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -117,8 +115,8 @@ const items: DocumentItem[] = [
         title: "第十一次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/11th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/11th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/11th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/11th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -127,8 +125,8 @@ const items: DocumentItem[] = [
         title: "第十二次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/12th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/12th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/12th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/12th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -137,8 +135,8 @@ const items: DocumentItem[] = [
         title: "第十三次常務會議",
         content: (
           <div className="flex gap-4">
-            <Link href="/doc/48th_2026/soc_doc/13th_GM_agenda.pdf">會議議程</Link>
-            <Link href="/doc/48th_2026/soc_doc/13th_GM_minutes.pdf">會議紀錄</Link>
+            <a href="/doc/48th_2026/soc_doc/13th_GM_agenda.pdf">會議議程</a>
+            <a href="/doc/48th_2026/soc_doc/13th_GM_minutes.pdf">會議紀錄</a>
           </div>
         ),
       },
@@ -152,7 +150,7 @@ const items: DocumentItem[] = [
         <tbody>
           <tr>
             <td className="border border-gray-300 p-2">
-              <Link href="/doc/48th_2026/soc_doc/48thcabinet_yp.pdf">全年工作計劃及財政預算</Link>
+              <a href="/doc/48th_2026/soc_doc/48thcabinet_yp.pdf">全年工作計劃及財政預算</a>
             </td>
           </tr>
         </tbody>
@@ -167,7 +165,7 @@ const items: DocumentItem[] = [
         <tbody>
           <tr>
             <td className="border border-gray-300 p-2">
-              <Link href="/doc/48th_2026/soc_doc/47th_AnnualReport.pdf">全年工作報告及財政報告</Link>
+              <a href="/doc/48th_2026/soc_doc/47th_AnnualReport.pdf">全年工作報告及財政報告</a>
             </td>
           </tr>
         </tbody>
