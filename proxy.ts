@@ -1,20 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"; 
-import Negotiator from 'negotiator'
-import { match } from '@formatjs/intl-localematcher'
 
 let locales = ['en-US', 'zh-HK']
 
 
 function getLocale(request : NextRequest) { 
-    const headers = { 'accept-language': request.headers.get('accept-language')};
-    const referer = request.headers.get('next-url');
-
-    const languages = new Negotiator({ headers : headers }).languages()
+    const referer = request.headers.get('next-url') || null;
     const defaultLocale = 'zh-HK'
+    const languages = request.headers.get('accept-language')?.split(',')[0] || defaultLocale;
 
-
-    console.log(referer);
-    
     if(referer){
         for (const locale of locales) {
             if (referer.startsWith(`/${locale}/`) || referer === `/${locale}`) {
@@ -22,8 +15,9 @@ function getLocale(request : NextRequest) {
             }
         }
     }
-
-    return match(languages, locales, defaultLocale);
+    
+    if(locales.includes(languages)) return languages;
+    else return defaultLocale;
 }
 
 export function proxy( request : NextRequest ) {
