@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/navigation-menu'
 import type { ComponentProps } from 'react'
 
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Languages } from "lucide-react"
 import { useTheme } from "next-themes"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -105,7 +106,10 @@ function IconName({ lang }: { lang: string }) {
               <p className="text-xs">{t.cucs}</p>
             </div>
           </Link>
-          <ModeToggle lang={lang} />
+          <div className="flex gap-2">
+            <LanguageToggle lang={lang} />
+            <ModeToggle lang={lang} />
+          </div>
         </div>
 
       </div>
@@ -134,6 +138,35 @@ export function ModeToggle({ lang }: { lang: string }) {
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           {t.system}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+export function LanguageToggle({ lang }: { lang: string }) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const switchLanguage = (newLang: string) => {
+    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
+    router.push(newPath);
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button variant="outline" size="icon">
+          <Languages className="h-[1.2rem] w-[1.2rem]" />
+          <span className="sr-only">Switch language</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => switchLanguage("en-US")}>
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => switchLanguage("zh-HK")}>
+          中文
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
