@@ -36,7 +36,6 @@ export function CarouselPlugin() {
                   <img
                     src={banner.src}
                     alt={banner.alt}
-                    priority={index === 0}
                     className="object-cover"
                   />
                 </div>
