@@ -149,7 +149,7 @@ export function LanguageToggle({ lang }: { lang: string }) {
   const router = useRouter();
 
   const switchLanguage = (newLang: string) => {
-    const newPath = pathname.replace(``, `/${newLang}`);
+    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
     router.push(newPath);
   };
 
