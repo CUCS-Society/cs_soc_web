@@ -97,7 +97,7 @@ function IconName({ lang }: { lang: string }) {
   return (
       <div className="max-w-4xl mx-auto px-7 py-5">
         <div className="flex items-start justify-between gap-4">
-          <Link href={`/${lang}/soc_web`} className="flex items-center gap-5 mb-3">
+          <Link href={`/soc_web`} className="flex items-center gap-5 mb-3">
             <div className="w-11 h-11 rounded-lg flex items-center justify-center">
               <span className="font-bold text-sm">CS</span>
             </div>
@@ -149,7 +149,7 @@ export function LanguageToggle({ lang }: { lang: string }) {
   const router = useRouter();
 
   const switchLanguage = (newLang: string) => {
-    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
+    const newPath = pathname.replace(``, `/${newLang}`);
     router.push(newPath);
   };
 
@@ -180,51 +180,51 @@ export function Header({ lang }: { lang: string }) {
   [
     {
       title: t.about, 
-      href: `/${lang}/soc_web/about`,
+      href: `/soc_web/about`,
       children: [
         {
           title: t.history,
-          href: `/${lang}/soc_web/about`,
+          href: `/soc_web/about`,
         },
         {
           title: t.pastCabinets,
-          href: `/${lang}/soc_web/about/cabinets`
+          href: `/soc_web/about/cabinets`
         }
       ]
     },
     {
       title: t.news, 
-      href: `/${lang}/soc_web/posts/all`,
+      href: `/soc_web/posts/all`,
       children: [
         {
           title: t.notice,
-          href: `/${lang}/soc_web/posts/notice`,
+          href: `/soc_web/posts/notice`,
         },
         {
           title: t.event,
-          href: `/${lang}/soc_web/posts/event`
+          href: `/soc_web/posts/event`
         },
         {
           title: t.college,
-          href: `/${lang}/soc_web/posts/college`
+          href: `/soc_web/posts/college`
         },
         { 
           title: t.other,
-          href: `/${lang}/soc_web/posts/other`
+          href: `/soc_web/posts/other`
         }
       ]
     },
     {
       title: t.documents,
-      href: `/${lang}/soc_web/docs/constitution`,
+      href: `/soc_web/docs/constitution`,
       children: [
         {
           title: t.constitution,
-          href: `/${lang}/soc_web/docs/constitution`
+          href: `/soc_web/docs/constitution`
         },
         {
           title: t.archive,
-          href: `/${lang}/soc_web/docs/archive`
+          href: `/soc_web/docs/archive`
         }
       ]
     }

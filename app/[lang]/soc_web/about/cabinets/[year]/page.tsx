@@ -40,10 +40,10 @@ export default async function Page({ params }  : CabinetProps) {
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
         <BreadcrumbPlugin
         items={[
-            { label: t.home, href: `/${lang}` },
-            { label: t.about, href: `/${lang}/about/history-of-cucs`},
-            { label: t.pastCabinet, href: `/${lang}/about/cabinets` },
-            { label: year, href: `/${lang}/about/cabinets/${year}`}
+            { label: t.home, href: `` },
+            { label: t.about, href: `/about/history-of-cucs`},
+            { label: t.pastCabinet, href: `/about/cabinets` },
+            { label: year, href: `/about/cabinets/${year}`}
         ]}
         />
 

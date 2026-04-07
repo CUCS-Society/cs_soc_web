@@ -22,6 +22,11 @@ function getLocale(request : NextRequest) {
 
 export function proxy( request : NextRequest ) {
     const  { pathname } = request.nextUrl;
+    const pathnameHasSoc_web = pathname.startsWith(`/soc_web`) || pathname === `/soc_web`
+
+    console.log(pathname, pathnameHasSoc_web);
+
+    if(!pathnameHasSoc_web) return;
     
     const pathnameHasLocale = locales.some(
         (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`

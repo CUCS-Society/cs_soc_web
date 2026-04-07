@@ -79,10 +79,10 @@ export default async function PostPage({ params }: PostProps) {
     <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
         <BreadcrumbPlugin
         items={[
-            { label: t.home, href: `/${lang}` },
-            { label: t.news, href: `/${lang}/posts/all` },
-            { label: category === "all" ? t.all : category, href: `/${lang}/posts/${category}` },
-            { label: post.title, href: `/${lang}/posts/${category}/${slug}` },
+            { label: t.home, href: `` },
+            { label: t.news, href: `/posts/all` },
+            { label: category === "all" ? t.all : category, href: `/posts/${category}` },
+            { label: post.title, href: `/posts/${category}/${slug}` },
         ]}
         />
 
