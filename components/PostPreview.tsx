@@ -22,7 +22,7 @@ const PostPreview = ({ post }: PostPreviewProps) => {
   return (
     <article className="w-full border-b border-border p-2">
       <Link
-        href={`/posts/${post.category ?? "all"}/${post.slug}`}
+        href={`/soc_web/posts/${post.category ?? "all"}/${post.slug}`}
         className={cn(
           "select-rounded-md flex w-full rounded-md leading-none no-underline outline-none transition-colors hover:bg-foreground/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         )}
