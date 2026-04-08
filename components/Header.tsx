@@ -29,7 +29,8 @@ function IconName({ lang }: { lang: string }) {
   )
 }
 
-export function Header({ lang }: { lang: string }) {
+export async function Header({ lang }: { lang: string }) {
+
   return (
     <header className="w-full">
       <IconName lang={lang} />

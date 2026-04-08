@@ -1,7 +1,7 @@
 import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin"
 import { PostPreviewList } from "@/components/PostPreview"
-import { posts } from "@/lib/seed"
 import { Dictionary } from "@/components/Translation"
+import { prisma } from "@/lib/prisma"
 
 interface PostProps {
   params: Promise<{
@@ -13,9 +13,11 @@ interface PostProps {
 export default async function Page({ params }: PostProps) {
   const { lang, category } = await params
   const t = Dictionary[lang]
-  const filteredPosts = posts.filter(
-    (post) => category === "all" || post.category == category
-  )
+
+  const posts = await prisma.post.findMany({
+    where: category === 'all' ? {} : { category }
+  });
+
   return (
     <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
       <BreadcrumbPlugin
@@ -25,7 +27,7 @@ export default async function Page({ params }: PostProps) {
           { label: t[category], href: `.` },
         ]}
       />
-      <PostPreviewList header={t[category]} posts={filteredPosts} />
+      <PostPreviewList header={t[category]} posts={posts} />
     </div>
   )
 }

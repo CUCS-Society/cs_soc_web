@@ -1,7 +1,11 @@
+"use server"
 import { CarouselPlugin } from "@/components/CarouselPlugin"
 import { PostPreviewList } from "@/components/PostPreview"
-import { posts } from "@/lib/seed"
 import { Translations } from "@/components/Translation"
+import { prisma } from "@/lib/prisma"
+import { auth } from "@/lib/auth/auth"
+import { headers } from "next/headers"
+
 
 const translations: Translations = {
   "en-US": {
@@ -21,6 +25,11 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { lang } = await params
   const t = translations[lang as keyof Translations]
+  const posts = await prisma.post.findMany();
+
+  const session = await auth.api.getSession({
+      headers: await headers()
+  })
 
   return (
     <main className="flex min-h-screen flex-col">

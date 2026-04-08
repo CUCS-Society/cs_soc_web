@@ -1,11 +1,10 @@
+"use server"
 import Link from "next/link"
-import { format, parseISO } from "date-fns"
 import { CalendarDays } from "lucide-react"
 import { ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { Post } from "@/lib/PostType"
+import { Post } from "@/generated/prisma/client"
 
 type PostPreviewProps = {
   post: Post
@@ -16,7 +15,7 @@ type PostPreviewListProps = {
   posts: Post[]
 }
 
-const PostPreview = ({ post }: PostPreviewProps) => {
+const PostPreview = async ({ post }: PostPreviewProps) =>  {
   const category = post.category
 
   return (
@@ -38,26 +37,12 @@ const PostPreview = ({ post }: PostPreviewProps) => {
           <div className="flex gap-2 text-sm leading-snug text-muted-foreground">
             <div className="flex items-center gap-1">
               <CalendarDays size={16} />
-              <time dateTime={post.publishedDate}>
-                {format(parseISO(post.publishedDate), "LLLL d, yyyy")}
+              <time dateTime={post.createdAt.toDateString()}>
+                {post.updatedAt.toDateString()}
               </time>
             </div>
             <span className="opacity-50">|</span>
           </div>
-          {post?.tags && (
-            <ul className="my-4 flex list-none flex-wrap gap-2 p-0">
-              {post.tags.map((tag: string) => (
-                <li key={tag}>
-                  <Badge
-                    variant="outline"
-                    className="inline-block rounded-full border border-muted-foreground/50 bg-muted-foreground/10 px-2 py-0.5 text-xs text-muted-foreground"
-                  >
-                    {tag}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
-          )}
           {post.description && (
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
               {post.description}
@@ -69,19 +54,20 @@ const PostPreview = ({ post }: PostPreviewProps) => {
   )
 }
 
-export function PostPreviewList({ header, posts }: PostPreviewListProps) {
+export async function PostPreviewList({ header, posts }: PostPreviewListProps) {
+  
   return (
     <div className="mx-auto mt-12 w-[90%] max-w-none lg:w-1/2">
-      <h2 className="text-3xl font-bold text-foreground"> {header}</h2>
+      <h1 className="text-base font-bold">{header}</h1>
       <div className="grid grid-cols-1 place-items-start justify-between">
         <div className="col-span-1 w-full">
           <div className="grid grid-flow-row">
             {posts.map((post) => (
-              <PostPreview key={post._id} post={post} />
+              <PostPreview key={post.id} post={post} />
             ))}
           </div>
           <Link
-            href="/posts/all"
+            href="/soc_web/posts/all"
             className="mt-10 flex items-center py-2 text-sm text-accent-foreground underline-offset-4 hover:text-muted-foreground hover:underline"
           >
             See all posts <ArrowRight className="ml-2 h-4 w-4" />
