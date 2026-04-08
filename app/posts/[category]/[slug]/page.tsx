@@ -16,7 +16,7 @@ interface PostProps {
   }>
 }
 
-async function getPostFromParams(params: PostProps["params"]): Promise<Post> {
+async function getPostFromParams(params: PostProps["params"]): Promise<Post | null> {
   const { category, slug } = await params
 
   const post = posts.find((post) => {
@@ -80,11 +80,14 @@ export default async function PostPage({ params }: PostProps) {
   const post = await getPostFromParams(
     Promise.resolve({ lang, slug, category })
   )
+
+  if (!post) notFound()
+  
+
   const content = await getPostContent(post.category, post.slug)
 
-  if (!post || !content) {
-    notFound()
-  }
+  if (!content) notFound()
+  
 
   return (
     <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
