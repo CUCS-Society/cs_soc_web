@@ -1,13 +1,13 @@
-import { notFound } from "next/navigation";
-import { readFile } from "fs/promises";
-import path from "path";
-import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
-import { Dictionary } from "@/components/Translation";
+import { notFound } from "next/navigation"
+import { readFile } from "fs/promises"
+import path from "path"
+import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin"
+import { Dictionary } from "@/components/Translation"
 
 interface PageProps {
   params: Promise<{
-    lang: string;
-  }>;
+    lang: string
+  }>
 }
 
 async function getHistoryContent(): Promise<string | null> {
@@ -17,36 +17,36 @@ async function getHistoryContent(): Promise<string | null> {
     "html",
     "about",
     "history-of-cucs.html"
-  );
+  )
 
   try {
-    return await readFile(filePath, "utf8");
+    return await readFile(filePath, "utf8")
   } catch {
-    return null;
+    return null
   }
 }
 
 export default async function Page({ params }: PageProps) {
-  const { lang } = await params;
-  const t = Dictionary[lang];
-  const content = await getHistoryContent();
+  const { lang } = await params
+  const t = Dictionary[lang]
+  const content = await getHistoryContent()
 
   if (!content) {
-    notFound();
+    notFound()
   }
 
   return (
-    <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
-        <BreadcrumbPlugin
+    <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
+      <BreadcrumbPlugin
         items={[
-            { label: t.home, href: `./..` },
-            { label: t.about, href: `.` },
+          { label: t.home, href: `./..` },
+          { label: t.about, href: `.` },
         ]}
-        />
+      />
 
-      <article className="prose max-w-none dark:prose-invert">
+      <article className="prose dark:prose-invert max-w-none">
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </article>
     </div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
+
 import {
   Carousel,
   CarouselContent,
@@ -17,13 +17,16 @@ export function CarouselPlugin() {
   )
 
   const banners = [
-    { src: `${process.env.NEXT_PUBLIC_BASE_PATH}/doc/48th_2026/banner.png`, alt: "2026 banner" },
+    {
+      src: `${process.env.NEXT_PUBLIC_BASE_PATH}/doc/48th_2026/banner.png`,
+      alt: "2026 banner",
+    },
   ]
 
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="mx-auto w-[90%] lg:w-[50%] max-w-none"
+      className="mx-auto w-[90%] max-w-none lg:w-[50%]"
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
@@ -44,7 +47,7 @@ export function CarouselPlugin() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious/>
+      <CarouselPrevious />
       <CarouselNext />
     </Carousel>
   )

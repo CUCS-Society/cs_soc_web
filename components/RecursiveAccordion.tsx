@@ -1,29 +1,29 @@
-import { ChevronDown } from "lucide-react";
-import type { ReactNode } from "react";
+import { ChevronDown } from "lucide-react"
+import type { ReactNode } from "react"
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/ui/accordion"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "@/components/ui/collapsible"
 
 export interface DocumentItem {
-  id: string;
-  title: string;
-  content?: ReactNode;
-  open?: boolean;
-  children?: DocumentItem[];
+  id: string
+  title: string
+  content?: ReactNode
+  open?: boolean
+  children?: DocumentItem[]
 }
 
 interface RecursiveAccordionContentProps {
-  items: DocumentItem[];
-  depth?: number;
+  items: DocumentItem[]
+  depth?: number
 }
 
 export const RecursiveAccordionContent = ({
@@ -45,9 +45,7 @@ export const RecursiveAccordionContent = ({
               value={item.id}
             >
               <AccordionTrigger className="px-4 py-3 hover:no-underline">
-                <div className="flex items-center gap-2">
-                  {item.title}
-                </div>
+                <div className="flex items-center gap-2">{item.title}</div>
               </AccordionTrigger>
               <AccordionContent className="p-0">
                 {item.children && item.children.length > 0 && (
@@ -57,16 +55,14 @@ export const RecursiveAccordionContent = ({
                   />
                 )}
                 {item.content && (
-                  <div className="px-4 py-3">
-                    {item.content}
-                  </div>
+                  <div className="px-4 py-3">{item.content}</div>
                 )}
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
       </div>
-    );
+    )
   }
 
   // Nested levels: use Collapsible
@@ -87,7 +83,7 @@ export const RecursiveAccordionContent = ({
             />
             {item.title}
           </CollapsibleTrigger>
-          <CollapsibleContent className="overflow-hidden ps-6 text-sm text-muted-foreground transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+          <CollapsibleContent className="data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden ps-6 text-sm text-muted-foreground transition-all">
             {item.children && item.children.length > 0 ? (
               <RecursiveAccordionContent
                 items={item.children}
@@ -100,5 +96,5 @@ export const RecursiveAccordionContent = ({
         </Collapsible>
       ))}
     </div>
-  );
-};
+  )
+}

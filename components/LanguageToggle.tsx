@@ -1,17 +1,22 @@
 "use client"
-import { usePathname, useRouter } from "next/navigation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { Languages } from "lucide-react";
-import { Button } from "./ui/button";
+import { usePathname, useRouter } from "next/navigation"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import { Languages } from "lucide-react"
+import { Button } from "./ui/button"
 
 export function LanguageToggle({ lang }: { lang: string }) {
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = usePathname()
+  const router = useRouter()
 
   const switchLanguage = (newLang: string) => {
-    const newPath = pathname.replace(`/${lang}`, `/${newLang}`);
-    router.push(newPath);
-  };
+    const newPath = pathname.replace(`/${lang}`, `/${newLang}`)
+    router.push(newPath)
+  }
 
   return (
     <DropdownMenu>

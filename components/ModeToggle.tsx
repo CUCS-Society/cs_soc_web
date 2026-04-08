@@ -1,13 +1,18 @@
 "use client"
-import { useTheme } from "next-themes";
-import { Dictionary } from "./Translation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "./ui/button";
+import { useTheme } from "next-themes"
+import { Dictionary } from "./Translation"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import { Moon, Sun } from "lucide-react"
+import { Button } from "./ui/button"
 
 export function ModeToggle({ lang }: { lang: string }) {
   const { setTheme } = useTheme()
-  const t = Dictionary[lang];
+  const t = Dictionary[lang]
 
   return (
     <DropdownMenu>

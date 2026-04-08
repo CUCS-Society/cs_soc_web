@@ -1,52 +1,51 @@
-import type { Metadata } from "next";
-import { Inter, Gelasio, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Inter, Gelasio, JetBrains_Mono } from "next/font/google"
+import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer"
+import { Header } from "@/components/Header"
 
 const fontSans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-});
+})
 
 const fontSerif = Gelasio({
   subsets: ["latin"],
   variable: "--font-serif",
-});
+})
 
 const fontMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-});
+})
 
 export const metadata: Metadata = {
   title: "Computer Science Society",
   description: "Computer Science Society",
-};
-
-interface LayoutProps {
-  children: React.ReactNode;
-  params: Promise<{
-    lang: string;
-  }>;
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: LayoutProps) {
-  const { lang } = await params;
+interface LayoutProps {
+  children: React.ReactNode
+  params: Promise<{
+    lang: string
+  }>
+}
+
+export default async function RootLayout({ children, params }: LayoutProps) {
+  const { lang } = await params
 
   return (
     <html lang={lang}>
-      <body className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}>
+      <body
+        className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} antialiased`}
+      >
         <ThemeProvider>
           <Header lang={lang} />
-            {children}
+          {children}
           <Footer />
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

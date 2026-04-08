@@ -23,6 +23,9 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  postsWritten  Post[]  @relation(name: "author")
+  postsProofread Post[] @relation(name: "proofreader")
+
   @@unique([email])
   @@map("user")
 }
@@ -73,4 +76,44 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+
+model Post{
+    id            String    @id
+    slug          String
+    title         String
+    category      String
+    tags          String?
+    description   String?
+    htmlContent   String
+
+    authorId      String?
+    proofreaderId String?
+    author        User? @relation(name: "author", fields: [authorId], references: [id], onDelete: Cascade)
+    proofreader   User? @relation(name: "proofreader", fields: [proofreaderId], references: [id], onDelete: Cascade)
+
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}
+
+
+model Cabinet{
+  id            String    @id
+  enName        String?
+  zhName        String?
+  year          Int
+  editionNumber Int
+  htmlHerf      String
+}
+
+
+model DocumentComponent{
+  id            String    @id
+  name          String
+  href          String?
+
+  parentId      String?
+  parent        DocumentComponent?  @relation(name: "parent-child" ,fields: [parentId], references: [id], onDelete: Cascade)
+  children      DocumentComponent[] @relation(name: "parent-child")
 }

@@ -1,56 +1,56 @@
-import { notFound } from "next/navigation";
-import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin";
-import { readFile } from "fs/promises";
-import path from "path";
-import { Dictionary } from "@/components/Translation";
+import { notFound } from "next/navigation"
+import { BreadcrumbPlugin } from "@/components/BreadcrumbPlugin"
+import { readFile } from "fs/promises"
+import path from "path"
+import { Dictionary } from "@/components/Translation"
 
 interface CabinetProps {
   params: Promise<{
-    lang: string;
-    year: string;
-  }>;
+    lang: string
+    year: string
+  }>
 }
 
-async function getCabinetContent( year : string ): Promise<string | null> {
+async function getCabinetContent(year: string): Promise<string | null> {
   const filePath = path.join(
     process.cwd(),
     "public",
     "doc",
     `${Number(year) - 1978}th_${year}`,
     `${Number(year) - 1978}th.html`
-    );
+  )
 
   try {
-    return await readFile(filePath, "utf8");
+    return await readFile(filePath, "utf8")
   } catch {
-    return null;
+    return null
   }
 }
 
-export default async function Page({ params }  : CabinetProps) {
-    const { lang, year } = await params;
-    const t = Dictionary[lang];
-    const content = await getCabinetContent(year);
+export default async function Page({ params }: CabinetProps) {
+  const { lang, year } = await params
+  const t = Dictionary[lang]
+  const content = await getCabinetContent(year)
 
   if (!content) {
-    notFound();
+    notFound()
   }
 
   return (
-    <div className="mx-auto w-[90%] lg:w-1/2 max-w-none py-10">
-        <BreadcrumbPlugin
+    <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
+      <BreadcrumbPlugin
         items={[
-            { label: t.home, href: `` },
-            { label: t.about, href: `/about/history-of-cucs`},
-            { label: t.pastCabinet, href: `/about/cabinets` },
-            { label: year, href: `/about/cabinets/${year}`}
+          { label: t.home, href: `` },
+          { label: t.about, href: `/about/history-of-cucs` },
+          { label: t.pastCabinet, href: `/about/cabinets` },
+          { label: year, href: `/about/cabinets/${year}` },
         ]}
-        />
+      />
 
-      <article className="prose max-w-none dark:prose-invert">
-        <base href="/"/>
+      <article className="prose dark:prose-invert max-w-none">
+        <base href="/" />
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </article>
     </div>
-  );
+  )
 }

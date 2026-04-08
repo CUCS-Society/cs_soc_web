@@ -1,6 +1,6 @@
-export type Translations = Record<string, Record<string, string>>;
-export const Dictionary : Translations = {
-  'en-US': {
+export type Translations = Record<string, Record<string, string>>
+export const Dictionary: Translations = {
+  "en-US": {
     cucs: "Computer Science Society of the Chinese University of Hong Kong",
     home: "Home",
     about: "About",
@@ -18,9 +18,9 @@ export const Dictionary : Translations = {
     archive: "Archive",
     light: "Light",
     dark: "Dark",
-    system: "System"
+    system: "System",
   },
-  'zh-HK': {
+  "zh-HK": {
     cucs: "香港中文大學計算機科學系會",
     home: "首頁",
     about: "介紹",
@@ -38,6 +38,6 @@ export const Dictionary : Translations = {
     archive: "幹事會文件",
     light: "日",
     dark: "夜",
-    system: "自動"
-  }
-};
+    system: "自動",
+  },
+}

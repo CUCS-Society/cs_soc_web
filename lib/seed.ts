@@ -1,6 +1,6 @@
-import { Post } from "./PostType";
+import { Post } from "./PostType"
 
-export const posts : Post[] = [
+export const posts: Post[] = [
   {
     _id: 1,
     slug: "welcome-to-cucs",
@@ -8,7 +8,8 @@ export const posts : Post[] = [
     publishedDate: "2026-03-01",
     category: "notice",
     tags: ["announcement", "community"],
-    description: "A quick hello from the Computer Science Society and what we are building this semester.",
+    description:
+      "A quick hello from the Computer Science Society and what we are building this semester.",
   },
   {
     _id: 2,
@@ -17,7 +18,8 @@ export const posts : Post[] = [
     publishedDate: "2026-03-05",
     category: "event",
     tags: ["events", "workshops"],
-    description: "A preview of upcoming sessions covering web, AI, and systems fundamentals.",
+    description:
+      "A preview of upcoming sessions covering web, AI, and systems fundamentals.",
   },
   {
     _id: 3,
@@ -26,7 +28,8 @@ export const posts : Post[] = [
     publishedDate: "2026-03-10",
     category: "college",
     tags: ["events", "showcase"],
-    description: "Meet your peers and see the projects they have been building this term.",
+    description:
+      "Meet your peers and see the projects they have been building this term.",
   },
   {
     _id: 4,
@@ -35,6 +38,7 @@ export const posts : Post[] = [
     publishedDate: "2026-03-14",
     category: "other",
     tags: ["resources", "open-source"],
-    description: "A practical guide to making your first open source contribution.",
+    description:
+      "A practical guide to making your first open source contribution.",
   },
-];
+]

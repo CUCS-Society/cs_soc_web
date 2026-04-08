@@ -1,31 +1,31 @@
 import { CarouselPlugin } from "@/components/CarouselPlugin"
-import { PostPreviewList } from '@/components/PostPreview'
-import { posts } from '@/lib/seed'
-import { Translations } from '@/components/Translation'
+import { PostPreviewList } from "@/components/PostPreview"
+import { posts } from "@/lib/seed"
+import { Translations } from "@/components/Translation"
 
 const translations: Translations = {
-  'en-US': {
-      headers: "Latest News"
+  "en-US": {
+    headers: "Latest News",
   },
-  'zh-HK': {
-    headers: "最新消息"
-  }
+  "zh-HK": {
+    headers: "最新消息",
+  },
 }
 
 interface PageProps {
   params: Promise<{
-    lang: string;
-  }>;
+    lang: string
+  }>
 }
 
 export default async function Page({ params }: PageProps) {
-  const { lang } = await params;
-  const t = translations[lang as keyof Translations];
-  
+  const { lang } = await params
+  const t = translations[lang as keyof Translations]
+
   return (
-      <main className="flex flex-col min-h-screen">
-            <CarouselPlugin />
-            <PostPreviewList header={t.headers} posts={posts} />
-      </main>
+    <main className="flex min-h-screen flex-col">
+      <CarouselPlugin />
+      <PostPreviewList header={t.headers} posts={posts} />
+    </main>
   )
 }
