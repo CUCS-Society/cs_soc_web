@@ -32,7 +32,6 @@ export function SignupForm() {
     setIsLoading(true)
     setError("")
 
-    console.log(email, name, password)
 
     try {
       const { data, error } = await authClient.signUp.email({

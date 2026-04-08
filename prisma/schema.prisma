@@ -80,20 +80,25 @@ model Verification {
 
 
 model Post{
-    id            String    @id
-    slug          String    @unique
-    title         String
-    category      String
-    description   String?
-    htmlContent   String
+    id              String    @id      @default(uuid())
+    slug            String
+    title           String
+    category        String
+    description     String?
+    htmlContent     String
+    jsonEditorState String
 
-    authorId      String?
-    proofreaderId String?
-    author        User? @relation(name: "author", fields: [authorId], references: [id], onDelete: Cascade)
-    proofreader   User? @relation(name: "proofreader", fields: [proofreaderId], references: [id], onDelete: Cascade)
+    authorId        String?
+    proofreaderId   String?
+    author          User? @relation(name: "author", fields: [authorId], references: [id], onDelete: Cascade)
+    proofreader     User? @relation(name: "proofreader", fields: [proofreaderId], references: [id], onDelete: Cascade)
 
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+
+    @@unique([slug])
+    @@index([authorId])
+    @@map("post")
 }
 
 
