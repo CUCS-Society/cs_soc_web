@@ -68,7 +68,7 @@ export default function EditPostForm({ post }: EditPostFormProps) {
   const handleDateChange = (date: Date | undefined) => {
     setFormData((prev) => ({
       ...prev,
-      publishedAt: date ? date.toISOString() : "",
+      createdAt: date ? date.toISOString() : "",
     }))
   }
 

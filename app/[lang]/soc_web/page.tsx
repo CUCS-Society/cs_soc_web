@@ -33,7 +33,9 @@ export default async function Page({ params }: PageProps) {
   return (
     <main className="flex min-h-screen flex-col">
       <CarouselPlugin />
-      <PostPreviewList header={t.headers} posts={posts} />
+      <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
+        <PostPreviewList header={t.headers} posts={posts}/>
+      </div>
     </main>
   )
 }

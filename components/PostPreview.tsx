@@ -43,7 +43,7 @@ const PostPreview = async ({ post, showEdit }: PostPreviewProps) => {
             <div className="flex items-center gap-1">
               <CalendarDays size={16} />
               <time dateTime={post.createdAt.toDateString()}>
-                {post.updatedAt.toDateString()}
+                {post.createdAt.toDateString()}
               </time>
             </div>
             <span className="opacity-50">|</span>
@@ -56,12 +56,13 @@ const PostPreview = async ({ post, showEdit }: PostPreviewProps) => {
         </div>
       </Link>
 
-      <Link
+      {showEdit&&<Link
         href={`soc_web/editor/${post.id}`}
         className="mr-4 flex w-24 shrink-0 items-center justify-center rounded-md px-2 py-3 text-xs font-semibold uppercase no-underline transition-colors outline-none hover:bg-foreground/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
       >
         <PencilLine className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
       </Link>
+      }
     </article>
   )
 }
@@ -72,7 +73,7 @@ export async function PostPreviewList({ header, posts }: PostPreviewListProps) {
   })
 
   return (
-    <div className="mx-auto mt-12 w-[90%] max-w-none lg:w-1/2">
+    <div className="mx-auto mt-12 w-[90%] max-w-none">
       <div className="flex gap-2">
         <h1 className="text-base font-bold">{header}</h1>
         {session && (
