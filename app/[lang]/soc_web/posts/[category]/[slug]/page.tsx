@@ -17,15 +17,16 @@ interface PostProps {
 //   return posts.map((post) => ({ slug: post.slug }));
 // }
 
-
-export async function generateMetadata( { params }: PostProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PostProps): Promise<Metadata> {
   const { lang, slug, category } = await params
   const post = await prisma.post.findUnique({
     where: { slug },
     include: {
-      author: true
-    }
-  });
+      author: true,
+    },
+  })
 
   if (!post) return {}
 
@@ -42,7 +43,7 @@ export default async function PostPage({ params }: PostProps) {
 
   const post = await prisma.post.findUnique({
     where: { slug },
-  });
+  })
 
   if (!post) notFound()
 
@@ -61,7 +62,9 @@ export default async function PostPage({ params }: PostProps) {
       />
 
       <article className="prose dark:prose-invert max-w-none">
-        <h1 className="mb-2">{post.title}</h1>
+        <h1 className="mb-3 text-5xl tracking-tighter text-pretty md:mb-4 lg:mb-6 lg:max-w-3xl lg:text-7xl">
+          {post.title}
+        </h1>
         <p className="text-sm text-muted-foreground">
           <time dateTime={post.createdAt.toDateString()}>
             {post.createdAt.toDateString()}

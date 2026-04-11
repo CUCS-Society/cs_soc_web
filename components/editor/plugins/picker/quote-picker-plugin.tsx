@@ -1,10 +1,10 @@
-import { $createQuoteNode } from "@lexical/rich-text";
-import { $setBlocksType } from "@lexical/selection";
-import { $getSelection, $isRangeSelection } from "lexical";
+import { $createQuoteNode } from "@lexical/rich-text"
+import { $setBlocksType } from "@lexical/selection"
+import { $getSelection, $isRangeSelection } from "lexical"
 
-import { QuoteIcon } from "lucide-react";
+import { QuoteIcon } from "lucide-react"
 
-import { ComponentPickerOption } from "@/components/editor/plugins/picker/component-picker-option";
+import { ComponentPickerOption } from "@/components/editor/plugins/picker/component-picker-option"
 
 export function QuotePickerPlugin() {
   return new ComponentPickerOption("Quote", {
@@ -12,10 +12,10 @@ export function QuotePickerPlugin() {
     keywords: ["block quote"],
     onSelect: (_, editor) =>
       editor.update(() => {
-        const selection = $getSelection();
+        const selection = $getSelection()
         if ($isRangeSelection(selection)) {
-          $setBlocksType(selection, () => $createQuoteNode());
+          $setBlocksType(selection, () => $createQuoteNode())
         }
       }),
-  });
+  })
 }

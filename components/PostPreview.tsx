@@ -1,13 +1,18 @@
 "use server"
 import Link from "next/link"
-import { CalendarDays } from "lucide-react"
+import { CalendarDays, PencilLine } from "lucide-react"
 import { ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Post } from "@/generated/prisma/client"
+import { headers } from "next/headers"
+import { auth } from "@/lib/auth/auth"
+import { Plus } from "lucide-react"
+import { Button } from "./ui/button"
 
 type PostPreviewProps = {
   post: Post
+  showEdit: Boolean
 }
 
 type PostPreviewListProps = {
@@ -15,11 +20,11 @@ type PostPreviewListProps = {
   posts: Post[]
 }
 
-const PostPreview = async ({ post }: PostPreviewProps) =>  {
+const PostPreview = async ({ post, showEdit }: PostPreviewProps) => {
   const category = post.category
 
   return (
-    <article className="w-full border-b border-border p-2">
+    <article className="flex w-full border-b border-border p-2">
       <Link
         href={`/soc_web/posts/${post.category ?? "all"}/${post.slug}`}
         className={cn(
@@ -50,20 +55,45 @@ const PostPreview = async ({ post }: PostPreviewProps) =>  {
           )}
         </div>
       </Link>
+
+      <Link
+        href={`soc_web/editor/${post.id}`}
+        className="mr-4 flex w-24 shrink-0 items-center justify-center rounded-md px-2 py-3 text-xs font-semibold uppercase no-underline transition-colors outline-none hover:bg-foreground/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+      >
+        <PencilLine className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+      </Link>
     </article>
   )
 }
 
 export async function PostPreviewList({ header, posts }: PostPreviewListProps) {
-  
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+
   return (
     <div className="mx-auto mt-12 w-[90%] max-w-none lg:w-1/2">
-      <h1 className="text-base font-bold">{header}</h1>
+      <div className="flex gap-2">
+        <h1 className="text-base font-bold">{header}</h1>
+        {session && (
+          <Button variant="outline" size="icon">
+            <Link href="/soc_web/editor">
+              <Plus className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+              <span className="sr-only">Create Post</span>
+            </Link>
+          </Button>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 place-items-start justify-between">
         <div className="col-span-1 w-full">
           <div className="grid grid-flow-row">
             {posts.map((post) => (
-              <PostPreview key={post.id} post={post} />
+              <PostPreview
+                key={post.id}
+                post={post}
+                showEdit={session ? true : false}
+              />
             ))}
           </div>
           <Link

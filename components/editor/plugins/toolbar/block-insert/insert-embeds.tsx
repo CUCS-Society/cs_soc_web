@@ -1,16 +1,16 @@
-import { INSERT_EMBED_COMMAND } from "@lexical/react/LexicalAutoEmbedPlugin";
+import { INSERT_EMBED_COMMAND } from "@lexical/react/LexicalAutoEmbedPlugin"
 
-import { useToolbarContext } from "@/components/editor/context/toolbar-context";
-import { EmbedConfigs } from "@/components/editor/plugins/embeds/auto-embed-plugin";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context"
+import { EmbedConfigs } from "@/components/editor/plugins/embeds/auto-embed-plugin"
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 
 export function InsertEmbeds() {
-  const { activeEditor } = useToolbarContext();
+  const { activeEditor } = useToolbarContext()
   return EmbedConfigs.map((embedConfig) => (
     <DropdownMenuItem
       key={embedConfig.type}
       onClick={() => {
-        activeEditor.dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type);
+        activeEditor.dispatchCommand(INSERT_EMBED_COMMAND, embedConfig.type)
       }}
     >
       <div className="flex items-center gap-1">
@@ -18,5 +18,5 @@ export function InsertEmbeds() {
         <span>{embedConfig.contentName}</span>
       </div>
     </DropdownMenuItem>
-  ));
+  ))
 }

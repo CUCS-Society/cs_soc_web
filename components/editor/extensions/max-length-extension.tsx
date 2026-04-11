@@ -1,6 +1,6 @@
-import { effect, namedSignals } from "@lexical/extension";
-import { $trimTextContentFromAnchor } from "@lexical/selection";
-import { $restoreEditorState } from "@lexical/utils";
+import { effect, namedSignals } from "@lexical/extension"
+import { $trimTextContentFromAnchor } from "@lexical/selection"
+import { $restoreEditorState } from "@lexical/utils"
 import {
   $getSelection,
   $isRangeSelection,
@@ -8,11 +8,11 @@ import {
   RootNode,
   defineExtension,
   safeCast,
-} from "lexical";
+} from "lexical"
 
 export interface MaxLengthConfig {
-  disabled: boolean;
-  maxLength: number;
+  disabled: boolean
+  maxLength: number
 }
 
 export const MaxLengthExtension = defineExtension({
@@ -21,25 +21,25 @@ export const MaxLengthExtension = defineExtension({
   name: "@shadcn-editor/MaxLength",
   register: (editor, _, state) =>
     effect(() => {
-      const output = state.getOutput();
+      const output = state.getOutput()
       if (output.disabled.value) {
-        return;
+        return
       }
-      const maxLength = output.maxLength.value;
-      let lastRestoredEditorState: EditorState | null = null;
+      const maxLength = output.maxLength.value
+      let lastRestoredEditorState: EditorState | null = null
       return editor.registerNodeTransform(RootNode, (rootNode: RootNode) => {
-        const selection = $getSelection();
+        const selection = $getSelection()
         if (!$isRangeSelection(selection) || !selection.isCollapsed()) {
-          return;
+          return
         }
-        const prevEditorState = editor.getEditorState();
+        const prevEditorState = editor.getEditorState()
         const prevTextContentSize = prevEditorState.read(() =>
-          rootNode.getTextContentSize(),
-        );
-        const textContentSize = rootNode.getTextContentSize();
+          rootNode.getTextContentSize()
+        )
+        const textContentSize = rootNode.getTextContentSize()
         if (prevTextContentSize !== textContentSize) {
-          const delCount = textContentSize - maxLength;
-          const anchor = selection.anchor;
+          const delCount = textContentSize - maxLength
+          const anchor = selection.anchor
 
           if (delCount > 0) {
             // Restore the old editor state instead if the last
@@ -48,13 +48,13 @@ export const MaxLengthExtension = defineExtension({
               prevTextContentSize === maxLength &&
               lastRestoredEditorState !== prevEditorState
             ) {
-              lastRestoredEditorState = prevEditorState;
-              $restoreEditorState(editor, prevEditorState);
+              lastRestoredEditorState = prevEditorState
+              $restoreEditorState(editor, prevEditorState)
             } else {
-              $trimTextContentFromAnchor(editor, anchor, delCount);
+              $trimTextContentFromAnchor(editor, anchor, delCount)
             }
           }
         }
-      });
+      })
     }),
-});
+})

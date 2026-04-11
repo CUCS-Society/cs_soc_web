@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth/auth"
 import { headers } from "next/headers"
 
-
 const translations: Translations = {
   "en-US": {
     headers: "Latest News",
@@ -25,10 +24,10 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { lang } = await params
   const t = translations[lang as keyof Translations]
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany()
 
   const session = await auth.api.getSession({
-      headers: await headers()
+    headers: await headers(),
   })
 
   return (

@@ -1,4 +1,8 @@
-import { $getRoot, type LexicalEditor, type SerializedEditorState } from "lexical"
+import {
+  $getRoot,
+  type LexicalEditor,
+  type SerializedEditorState,
+} from "lexical"
 
 /**
  * Converts Lexical editor state to HTML

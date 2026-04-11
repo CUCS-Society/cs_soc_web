@@ -3,39 +3,35 @@ import { prisma } from "@/lib/prisma"
 import { auth } from "@/lib/auth/auth"
 import { headers } from "next/headers"
 import { convertEditorStateToHtml } from "@/lib/editor-utils"
+import { create } from "lodash"
 
 export async function POST(request: NextRequest) {
   try {
-    // Check authentication
     const session = await auth.api.getSession({
-      headers: await headers()
+      headers: await headers(),
     })
 
     console.log("Session data:", session)
-    
+
     if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      )
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const body = await request.json()
-    const { title, category, description, slug, jsonEditorState } = body
+    const { title, category, description, slug, jsonEditorState, createdAt } =
+      body
 
-    console.log("Received post data:", { title, category, description, slug, jsonEditorState })
+    console.log("Received post data:", body)
 
-    // Validate required fields
-    if (!title || !category || !slug || !jsonEditorState) {
+    if (!title || !category || !slug || !jsonEditorState || !createdAt) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       )
     }
 
-    // Check if slug already exists
     const existingPost = await prisma.post.findUnique({
-      where: { slug }
+      where: { slug },
     })
 
     if (existingPost) {
@@ -45,7 +41,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Convert editor state to HTML
     const htmlContent = await convertEditorStateToHtml(jsonEditorState)
 
     // Create the post
@@ -58,6 +53,7 @@ export async function POST(request: NextRequest) {
         htmlContent: htmlContent,
         jsonEditorState: jsonEditorState,
         authorId: session.user.id,
+        createdAt: new Date(createdAt),
       },
     })
 
@@ -65,7 +61,6 @@ export async function POST(request: NextRequest) {
       { message: "Post created successfully", post },
       { status: 201 }
     )
-
   } catch (error) {
     console.error("Error creating post:", error)
     return NextResponse.json(

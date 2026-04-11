@@ -6,9 +6,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { type SerializedEditorState } from "lexical"
+import { DatePickerInput } from "@/components/DatePicker"
+import { useRouter } from "next/navigation"
 
 interface PostFormData {
   title: string
@@ -16,22 +24,28 @@ interface PostFormData {
   description: string
   slug: string
   jsonEditorState: string
+  createdAt: string
 }
 
 export default function CreatePostPage() {
+  const router = useRouter()
+
   const [formData, setFormData] = useState<PostFormData>({
     title: "",
     category: "",
     description: "",
     slug: "",
     jsonEditorState: "",
+    createdAt: new Date().toISOString(),
   })
 
-  const [editorState, setEditorState] = useState<SerializedEditorState | null>(null)
+  const [editorState, setEditorState] = useState<SerializedEditorState | null>(
+    null
+  )
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (field: keyof PostFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }))
 
     // Auto-generate slug from title
     if (field === "title") {
@@ -41,15 +55,22 @@ export default function CreatePostPage() {
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-")
         .trim()
-      setFormData(prev => ({ ...prev, slug }))
+      setFormData((prev) => ({ ...prev, title: value, slug }))
     }
+  }
+
+  const handleDateChange = (date: Date | undefined) => {
+    setFormData((prev) => ({
+      ...prev,
+      createdAt: date ? date.toISOString() : "",
+    }))
   }
 
   const handleEditorChange = (serializedState: SerializedEditorState) => {
     setEditorState(serializedState)
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      jsonEditorState: JSON.stringify(serializedState)
+      jsonEditorState: JSON.stringify(serializedState),
     }))
   }
 
@@ -58,19 +79,21 @@ export default function CreatePostPage() {
     setIsSubmitting(true)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      )
 
       if (response.ok) {
-        // Handle success - redirect or show success message
         console.log("Post created successfully!")
+        router.push(`/soc_web/posts/${formData.category}/${formData.slug}`)
       } else {
-        // Handle error
         console.error("Failed to create post")
       }
     } catch (error) {
@@ -81,14 +104,14 @@ export default function CreatePostPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <Card className="max-w-4xl mx-auto">
+    <div className="container mx-auto px-4 py-8">
+      <Card className="mx-auto">
         <CardHeader>
           <CardTitle>Create New Post</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="title">Title</Label>
                 <Input
@@ -104,7 +127,9 @@ export default function CreatePostPage() {
                 <Label htmlFor="category">Category</Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) => handleInputChange("category", value!)}
+                  onValueChange={(value) =>
+                    handleInputChange("category", value!)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -117,6 +142,14 @@ export default function CreatePostPage() {
                   </SelectContent>
                 </Select>
               </div>
+
+              <DatePickerInput
+                label="Create Date"
+                value={
+                  formData.createdAt ? new Date(formData.createdAt) : undefined
+                }
+                onChange={handleDateChange}
+              />
             </div>
 
             <div className="space-y-2">
@@ -135,7 +168,9 @@ export default function CreatePostPage() {
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) => handleInputChange("description", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("description", e.target.value)
+                }
                 placeholder="Brief description of the post"
                 rows={3}
               />
@@ -143,10 +178,10 @@ export default function CreatePostPage() {
 
             <div className="space-y-2">
               <Label>Content</Label>
-              <div className="border rounded-lg">
+              <div className="rounded-lg border">
                 <Editor
                   onSerializedChange={handleEditorChange}
-                //   editorSerializedState={editorState ?? undefined}
+                  //   editorSerializedState={editorState ?? undefined}
                 />
               </div>
             </div>

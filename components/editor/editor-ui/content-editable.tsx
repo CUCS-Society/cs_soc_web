@@ -1,12 +1,12 @@
-import type { JSX } from "react";
+import type { JSX } from "react"
 
-import { ContentEditable as LexicalContentEditable } from "@lexical/react/LexicalContentEditable";
+import { ContentEditable as LexicalContentEditable } from "@lexical/react/LexicalContentEditable"
 
 type Props = {
-  placeholder: string;
-  className?: string;
-  placeholderClassName?: string;
-};
+  placeholder: string
+  className?: string
+  placeholderClassName?: string
+}
 
 export function ContentEditable({
   placeholder,
@@ -19,11 +19,11 @@ export function ContentEditable({
       aria-placeholder={placeholder}
       placeholder={
         <div
-          className={`text-muted-foreground pointer-events-none absolute top-0 left-0 overflow-hidden px-4 py-2 text-ellipsis select-none ${placeholderClassName ?? ""}`.trim()}
+          className={`pointer-events-none absolute top-0 left-0 overflow-hidden px-4 py-2 text-ellipsis text-muted-foreground select-none ${placeholderClassName ?? ""}`.trim()}
         >
           {placeholder}
         </div>
       }
     />
-  );
+  )
 }

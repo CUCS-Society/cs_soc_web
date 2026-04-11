@@ -1,42 +1,42 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from "react"
 
-import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link"
 import {
   $isRangeSelection,
   // COMMAND_PRIORITY_NORMAL,
   // KEY_MODIFIER_COMMAND,
   type BaseSelection,
-} from "lexical";
+} from "lexical"
 
-import { LinkIcon } from "lucide-react";
+import { LinkIcon } from "lucide-react"
 
-import { useToolbarContext } from "@/components/editor/context/toolbar-context";
-import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
-import { getSelectedNode } from "@/components/editor/utils/get-selected-node";
-import { sanitizeUrl } from "@/components/editor/utils/url";
-import { Toggle } from "@/components/ui/toggle";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context"
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar"
+import { getSelectedNode } from "@/components/editor/utils/get-selected-node"
+import { sanitizeUrl } from "@/components/editor/utils/url"
+import { Toggle } from "@/components/ui/toggle"
 
 export function LinkToolbarPlugin({
   setIsLinkEditMode,
 }: {
-  setIsLinkEditMode: (isEditMode: boolean) => void;
+  setIsLinkEditMode: (isEditMode: boolean) => void
 }) {
-  const { activeEditor } = useToolbarContext();
-  const [isLink, setIsLink] = useState(false);
+  const { activeEditor } = useToolbarContext()
+  const [isLink, setIsLink] = useState(false)
 
   const $updateToolbar = (selection: BaseSelection) => {
     if ($isRangeSelection(selection)) {
-      const node = getSelectedNode(selection);
-      const parent = node.getParent();
+      const node = getSelectedNode(selection)
+      const parent = node.getParent()
       if ($isLinkNode(parent) || $isLinkNode(node)) {
-        setIsLink(true);
+        setIsLink(true)
       } else {
-        setIsLink(false);
+        setIsLink(false)
       }
     }
-  };
+  }
 
-  useUpdateToolbarHandler($updateToolbar);
+  useUpdateToolbarHandler($updateToolbar)
 
   // useEffect(() => {
   //   return activeEditor.registerCommand(
@@ -65,16 +65,13 @@ export function LinkToolbarPlugin({
 
   const insertLink = useCallback(() => {
     if (!isLink) {
-      setIsLinkEditMode(true);
-      activeEditor.dispatchCommand(
-        TOGGLE_LINK_COMMAND,
-        sanitizeUrl("https://"),
-      );
+      setIsLinkEditMode(true)
+      activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, sanitizeUrl("https://"))
     } else {
-      setIsLinkEditMode(false);
-      activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
+      setIsLinkEditMode(false)
+      activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null)
     }
-  }, [activeEditor, isLink, setIsLinkEditMode]);
+  }, [activeEditor, isLink, setIsLinkEditMode])
 
   return (
     <Toggle
@@ -85,5 +82,5 @@ export function LinkToolbarPlugin({
     >
       <LinkIcon className="h-4 w-4" />
     </Toggle>
-  );
+  )
 }

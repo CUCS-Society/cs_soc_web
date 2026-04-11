@@ -15,8 +15,8 @@ export default async function Page({ params }: PostProps) {
   const t = Dictionary[lang]
 
   const posts = await prisma.post.findMany({
-    where: category === 'all' ? {} : { category }
-  });
+    where: category === "all" ? {} : { category },
+  })
 
   return (
     <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">

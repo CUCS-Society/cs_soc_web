@@ -1,77 +1,57 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Editor } from "@/components/Editor"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { type SerializedEditorState } from "lexical"
+import { DatePickerInput } from "@/components/DatePicker"
+import { Post } from "@/generated/prisma/client"
+import { useRouter } from "next/navigation"
 
-interface Post {
-  id: string
+interface PostFormData {
   title: string
   category: string
   description: string
   slug: string
   jsonEditorState: string
+  createdAt: string
 }
 
 interface EditPostFormProps {
-  postId: string
+  post: Post
 }
 
-export default function EditPostForm({ postId }: EditPostFormProps) {
-  const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    description: "",
-    slug: "",
+export default function EditPostForm({ post }: EditPostFormProps) {
+  const router = useRouter()
+  const [formData, setFormData] = useState<PostFormData>({
+    title: post.title,
+    category: post.category,
+    description: post.description || "",
+    slug: post.slug,
+    jsonEditorState: post.jsonEditorState,
+    createdAt: post.createdAt
+      ? new Date(post.createdAt).toISOString()
+      : new Date().toISOString(),
   })
 
-  const [editorState, setEditorState] = useState<SerializedEditorState | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [editorState] = useState<SerializedEditorState | undefined>(
+    post.jsonEditorState ? JSON.parse(post.jsonEditorState) : undefined
+  )
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Load existing post data
-  useEffect(() => {
-    const loadPost = async () => {
-      try {
-        const response = await fetch(`/api/posts/${postId}`)
-        if (response.ok) {
-          const post: Post = await response.json()
-
-          setFormData({
-            title: post.title,
-            category: post.category,
-            description: post.description || "",
-            slug: post.slug,
-          })
-
-          // Parse and set the editor state
-          if (post.jsonEditorState) {
-            try {
-              const parsedState = JSON.parse(post.jsonEditorState) as SerializedEditorState
-              setEditorState(parsedState)
-            } catch (error) {
-              console.error("Error parsing editor state:", error)
-            }
-          }
-        }
-      } catch (error) {
-        console.error("Error loading post:", error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    loadPost()
-  }, [postId])
-
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  const handleInputChange = (field: keyof PostFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
 
     // Auto-generate slug from title
     if (field === "title") {
@@ -81,12 +61,22 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-")
         .trim()
-      setFormData(prev => ({ ...prev, slug }))
+      setFormData((prev) => ({ ...prev, title: value, slug }))
     }
   }
 
+  const handleDateChange = (date: Date | undefined) => {
+    setFormData((prev) => ({
+      ...prev,
+      publishedAt: date ? date.toISOString() : "",
+    }))
+  }
+
   const handleEditorChange = (serializedState: SerializedEditorState) => {
-    setEditorState(serializedState)
+    setFormData((prev) => ({
+      ...prev,
+      jsonEditorState: JSON.stringify(serializedState),
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -94,21 +84,20 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
     setIsSubmitting(true)
 
     try {
-      const updateData = {
-        ...formData,
-        jsonEditorState: editorState ? JSON.stringify(editorState) : "",
-      }
-
-      const response = await fetch(`/api/posts/${postId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updateData),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_PATH}/api/posts/${post.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      )
 
       if (response.ok) {
         console.log("Post updated successfully!")
+        router.push(`/soc_web/posts/${formData.category}/${formData.slug}`)
       } else {
         console.error("Failed to update post")
       }
@@ -119,19 +108,15 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
     }
   }
 
-  if (isLoading) {
-    return <div className="flex justify-center p-8">Loading post...</div>
-  }
-
   return (
-    <div className="container mx-auto py-8 px-4">
-      <Card className="max-w-4xl mx-auto">
+    <div className="container mx-auto px-4 py-8">
+      <Card className="mx-auto">
         <CardHeader>
           <CardTitle>Edit Post</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="title">Title</Label>
                 <Input
@@ -147,7 +132,9 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
                 <Label htmlFor="category">Category</Label>
                 <Select
                   value={formData.category}
-                  onValueChange={(value) => handleInputChange("category", value!)}
+                  onValueChange={(value) =>
+                    handleInputChange("category", value || "other")
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -160,6 +147,14 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
                   </SelectContent>
                 </Select>
               </div>
+
+              <DatePickerInput
+                label="Publish Date"
+                value={
+                  formData.createdAt ? new Date(formData.createdAt) : undefined
+                }
+                onChange={handleDateChange}
+              />
             </div>
 
             <div className="space-y-2">
@@ -178,7 +173,9 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
               <Textarea
                 id="description"
                 value={formData.description}
-                onChange={(e) => handleInputChange("description", e.target.value)}
+                onChange={(e) =>
+                  handleInputChange("description", e.target.value)
+                }
                 placeholder="Brief description of the post"
                 rows={3}
               />
@@ -186,10 +183,10 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
 
             <div className="space-y-2">
               <Label>Content</Label>
-              <div className="border rounded-lg">
+              <div className="rounded-lg border">
                 <Editor
                   onSerializedChange={handleEditorChange}
-                  editorSerializedState={editorState ?? undefined}
+                  editorSerializedState={editorState}
                 />
               </div>
             </div>
@@ -199,7 +196,7 @@ export default function EditPostForm({ postId }: EditPostFormProps) {
               disabled={isSubmitting || !formData.title || !formData.category}
               className="w-full"
             >
-              {isSubmitting ? "Updating..." : "Update Post"}
+              {isSubmitting ? "Saving..." : "Save Changes"}
             </Button>
           </form>
         </CardContent>

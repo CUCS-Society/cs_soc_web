@@ -1,12 +1,12 @@
-import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/react/LexicalHorizontalRuleNode";
+import { INSERT_HORIZONTAL_RULE_COMMAND } from "@lexical/react/LexicalHorizontalRuleNode"
 
-import { ScissorsIcon } from "lucide-react";
+import { ScissorsIcon } from "lucide-react"
 
-import { useToolbarContext } from "@/components/editor/context/toolbar-context";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context"
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 
 export function InsertHorizontalRule() {
-  const { activeEditor } = useToolbarContext();
+  const { activeEditor } = useToolbarContext()
 
   return (
     <DropdownMenuItem
@@ -19,5 +19,5 @@ export function InsertHorizontalRule() {
         <span>Horizontal Rule</span>
       </div>
     </DropdownMenuItem>
-  );
+  )
 }

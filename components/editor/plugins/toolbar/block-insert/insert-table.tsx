@@ -1,11 +1,11 @@
-import { TableIcon } from "lucide-react";
+import { TableIcon } from "lucide-react"
 
-import { useToolbarContext } from "@/components/editor/context/toolbar-context";
-import { InsertTableDialog } from "@/components/editor/plugins/table-plugin";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context"
+import { InsertTableDialog } from "@/components/editor/plugins/table-plugin"
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 
 export function InsertTable() {
-  const { activeEditor, showModal } = useToolbarContext();
+  const { activeEditor, showModal } = useToolbarContext()
 
   return (
     <DropdownMenuItem
@@ -20,5 +20,5 @@ export function InsertTable() {
         <span>Table</span>
       </div>
     </DropdownMenuItem>
-  );
+  )
 }

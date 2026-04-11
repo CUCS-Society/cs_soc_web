@@ -1,15 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from "react"
 
 import {
   $getSelectionStyleValueForProperty,
   $patchStyleText,
-} from "@lexical/selection";
-import { $getSelection, $isRangeSelection, type BaseSelection } from "lexical";
+} from "@lexical/selection"
+import { $getSelection, $isRangeSelection, type BaseSelection } from "lexical"
 
-import { PaintBucketIcon } from "lucide-react";
+import { PaintBucketIcon } from "lucide-react"
 
-import { useToolbarContext } from "@/components/editor/context/toolbar-context";
-import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar";
+import { useToolbarContext } from "@/components/editor/context/toolbar-context"
+import { useUpdateToolbarHandler } from "@/components/editor/editor-hooks/use-update-toolbar"
 import {
   ColorPicker,
   ColorPickerAlphaSlider,
@@ -20,13 +20,13 @@ import {
   ColorPickerHueSlider,
   ColorPickerInput,
   ColorPickerTrigger,
-} from "@/components/editor/editor-ui/color-picker";
-import { Button } from "@/components/ui/button";
+} from "@/components/editor/editor-ui/color-picker"
+import { Button } from "@/components/ui/button"
 
 export function FontBackgroundToolbarPlugin() {
-  const { activeEditor } = useToolbarContext();
+  const { activeEditor } = useToolbarContext()
 
-  const [bgColor, setBgColor] = useState("#fff");
+  const [bgColor, setBgColor] = useState("#fff")
 
   const $updateToolbar = (selection: BaseSelection) => {
     if ($isRangeSelection(selection)) {
@@ -34,36 +34,36 @@ export function FontBackgroundToolbarPlugin() {
         $getSelectionStyleValueForProperty(
           selection,
           "background-color",
-          "#fff",
-        ),
-      );
+          "#fff"
+        )
+      )
     }
-  };
+  }
 
-  useUpdateToolbarHandler($updateToolbar);
+  useUpdateToolbarHandler($updateToolbar)
 
   const applyStyleText = useCallback(
     (styles: Record<string, string>, _skipHistoryStack?: boolean) => {
       activeEditor.update(
         () => {
-          const selection = $getSelection();
-          activeEditor.setEditable(false);
+          const selection = $getSelection()
+          activeEditor.setEditable(false)
           if (selection !== null) {
-            $patchStyleText(selection, styles);
+            $patchStyleText(selection, styles)
           }
         },
-        { tag: "historic" },
-      );
+        { tag: "historic" }
+      )
     },
-    [activeEditor],
-  );
+    [activeEditor]
+  )
 
   const onBgColorSelect = useCallback(
     (value: string) => {
-      applyStyleText({ "background-color": value }, true);
+      applyStyleText({ "background-color": value }, true)
     },
-    [applyStyleText],
-  );
+    [applyStyleText]
+  )
 
   return (
     <ColorPicker
@@ -73,12 +73,16 @@ export function FontBackgroundToolbarPlugin() {
       onValueChange={onBgColorSelect}
       onOpenChange={(open) => {
         if (!open) {
-          activeEditor.setEditable(true);
-          activeEditor.focus();
+          activeEditor.setEditable(true)
+          activeEditor.focus()
         }
       }}
     >
-      <ColorPickerTrigger render={<Button variant={"outline"} size={"icon-sm"} />}><PaintBucketIcon className="size-4" /></ColorPickerTrigger>
+      <ColorPickerTrigger
+        render={<Button variant={"outline"} size={"icon-sm"} />}
+      >
+        <PaintBucketIcon className="size-4" />
+      </ColorPickerTrigger>
       <ColorPickerContent>
         <ColorPickerArea />
         <div className="flex items-center gap-2">
@@ -94,5 +98,5 @@ export function FontBackgroundToolbarPlugin() {
         </div>
       </ColorPickerContent>
     </ColorPicker>
-  );
+  )
 }
