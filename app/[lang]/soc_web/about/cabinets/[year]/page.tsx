@@ -1,0 +1,56 @@
+import { notFound } from "next/navigation"
+import { BreadcrumbPlugin } from "@/components/soc_web/BreadcrumbPlugin"
+import { readFile } from "fs/promises"
+import path from "path"
+import { Dictionary } from "@/components/soc_web/Translation"
+
+interface CabinetProps {
+  params: Promise<{
+    lang: string
+    year: string
+  }>
+}
+
+async function getCabinetContent(year: string): Promise<string | null> {
+  const filePath = path.join(
+    process.cwd(),
+    "public",
+    "doc",
+    `${Number(year) - 1978}th_${year}`,
+    `${Number(year) - 1978}th.html`
+  )
+
+  try {
+    return await readFile(filePath, "utf8")
+  } catch {
+    return null
+  }
+}
+
+export default async function Page({ params }: CabinetProps) {
+  const { lang, year } = await params
+  const t = Dictionary[lang]
+  const content = await getCabinetContent(year)
+
+  if (!content) {
+    notFound()
+  }
+
+  return (
+    <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
+      <BreadcrumbPlugin
+        items={[
+          { label: t.home, href: `` },
+          { label: t.about, href: `/about/history-of-cucs` },
+          { label: t.pastCabinet, href: `/about/cabinets` },
+          { label: year, href: `/about/cabinets/${year}` },
+        ]}
+      />
+
+      <article className="prose dark:prose-invert max-w-none">
+        <base href="/" />
+        <div dangerouslySetInnerHTML={{ __html: content }} />
+      </article>
+    </div>
+  )
+}
