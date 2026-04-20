@@ -74,7 +74,7 @@ CREATE TABLE "Cabinet" (
     "zhName" TEXT,
     "year" INTEGER NOT NULL,
     "editionNumber" INTEGER NOT NULL,
-    "htmlHerf" TEXT NOT NULL
+    "htmlhref" TEXT NOT NULL
 );
 
 -- CreateTable

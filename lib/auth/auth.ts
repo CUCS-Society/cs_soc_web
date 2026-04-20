@@ -13,4 +13,23 @@ export const auth = betterAuth({
   advanced: {
     useSecureCookies: false,
   },
+
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          const email = user.email?.toLowerCase() ?? "";
+
+          const allowedDomains = ["cse.cuhk.edu.hk"];
+          const allowedEmails = ["cscs@cse.cuhk.edu.hk"];
+
+          const domain = email.split("@")[1];
+
+          if (!allowedDomains.includes(domain) || !allowedEmails.includes(email)) {
+              throw new Error("Email domain not allowed or user not authorized.");
+          }
+        }
+      }
+    }
+  }
 })

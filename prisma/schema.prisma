@@ -25,6 +25,7 @@ model User {
 
   postsWritten  Post[]  @relation(name: "author")
   postsProofread Post[] @relation(name: "proofreader")
+  FileCreated FileNode[] @relation(name: "author")
 
   @@unique([email])
   @@map("user")
@@ -103,21 +104,35 @@ model Post{
 
 
 model Cabinet{
-  id            String    @id
+  id            String    @id  @default(uuid())
   enName        String?
   zhName        String?
-  year          Int
-  editionNumber Int
-  htmlHerf      String
+  year          Int       @unique
+  editionNumber Int       @unique
+  htmlhref      String?
+  iconSrc       String?
 }
 
 
-model DocumentComponent{
-  id            String    @id
+model FileNode{
+  id            String    @id  @default(uuid())
+
+  category      String
   name          String
+  slug          String
+  path          String    @unique
+
+  isFolder      Boolean  @default(false)
+
   href          String?
 
   parentId      String?
-  parent        DocumentComponent?  @relation(name: "parent-child" ,fields: [parentId], references: [id], onDelete: Cascade)
-  children      DocumentComponent[] @relation(name: "parent-child")
+  parent        FileNode?  @relation(name: "parent-child", fields: [parentId], references: [id], onDelete: Cascade)
+  children      FileNode[] @relation(name: "parent-child")
+  
+  authorId        String?
+  author          User? @relation(name: "author", fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

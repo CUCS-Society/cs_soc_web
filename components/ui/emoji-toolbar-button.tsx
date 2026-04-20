@@ -254,8 +254,8 @@ function EmojiPickerContent({
 
   const isCategoryVisible = React.useCallback(
     (categoryId: string) =>
-      visibleCategories.has(categoryId)
-        ? visibleCategories.get(categoryId)
+      visibleCategories.has(categoryId as EmojiCategoryList)
+        ? visibleCategories.get(categoryId as EmojiCategoryList)
         : false,
     [visibleCategories]
   )

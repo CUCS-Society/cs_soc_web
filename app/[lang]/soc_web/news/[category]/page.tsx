@@ -19,7 +19,7 @@ export default async function Page({ params }: PostProps) {
   })
 
   return (
-    <div>
+    <div className="mx-auto w-[90%] max-w-none py-10 ">
       <BreadcrumbPlugin
         items={[
           { label: t.home, href: `./..` },

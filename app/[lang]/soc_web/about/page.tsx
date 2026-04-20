@@ -10,33 +10,13 @@ interface PageProps {
   }>
 }
 
-async function getHistoryContent(): Promise<string | null> {
-  const filePath = path.join(
-    process.cwd(),
-    "public",
-    "html",
-    "about",
-    "history-of-cucs.html"
-  )
-
-  try {
-    return await readFile(filePath, "utf8")
-  } catch {
-    return null
-  }
-}
 
 export default async function Page({ params }: PageProps) {
   const { lang } = await params
   const t = Dictionary[lang]
-  const content = await getHistoryContent()
-
-  if (!content) {
-    notFound()
-  }
 
   return (
-    <div>
+    <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
       <BreadcrumbPlugin
         items={[
           { label: t.home, href: `./..` },
@@ -45,7 +25,7 @@ export default async function Page({ params }: PageProps) {
       />
 
       <article className="prose dark:prose-invert max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+
       </article>
     </div>
   )

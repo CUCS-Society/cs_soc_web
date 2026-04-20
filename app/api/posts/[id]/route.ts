@@ -115,3 +115,41 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     )
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    })
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    const { id } = await params
+
+    const post = await prisma.post.findUnique({
+      where: { id },
+    })
+
+    if (!post) {
+      return NextResponse.json({ error: "Post not found" }, { status: 404 })
+    }
+
+    if (post.authorId !== session.user.id) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 })
+    }
+
+    await prisma.post.delete({
+      where: { id },
+    })
+
+    return NextResponse.json({ message: "Post deleted successfully" })
+  } catch (error) {
+    console.error("Error deleting post:", error)
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    )
+  }
+}

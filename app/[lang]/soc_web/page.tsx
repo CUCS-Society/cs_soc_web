@@ -31,9 +31,11 @@ export default async function Page({ params }: PageProps) {
   })
 
   return (
-    <main className="flex min-h-screen flex-col">
-      <CarouselPlugin />
-      <PostPreviewList header={t.headers} posts={posts} />
-    </main>
+    <div className="justify-center items-center flex">
+      <main className="flex min-h-screen flex-col lg:w-1/2">
+        <CarouselPlugin />
+        <PostPreviewList header={t.headers} posts={posts} />
+      </main>
+    </div>
   )
 }

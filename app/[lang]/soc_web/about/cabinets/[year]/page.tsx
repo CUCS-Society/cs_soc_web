@@ -3,6 +3,7 @@ import { BreadcrumbPlugin } from "@/components/soc_web/BreadcrumbPlugin"
 import { readFile } from "fs/promises"
 import path from "path"
 import { Dictionary } from "@/components/soc_web/Translation"
+import { prisma } from "@/lib/prisma"
 
 interface CabinetProps {
   params: Promise<{
@@ -11,28 +12,19 @@ interface CabinetProps {
   }>
 }
 
-async function getCabinetContent(year: string): Promise<string | null> {
-  const filePath = path.join(
-    process.cwd(),
-    "public",
-    "doc",
-    `${Number(year) - 1978}th_${year}`,
-    `${Number(year) - 1978}th.html`
-  )
-
-  try {
-    return await readFile(filePath, "utf8")
-  } catch {
-    return null
-  }
-}
 
 export default async function Page({ params }: CabinetProps) {
   const { lang, year } = await params
   const t = Dictionary[lang]
-  const content = await getCabinetContent(year)
+  const cabinet = await prisma.cabinet.findUnique({
+    where: {
+      year: Number(year),
+    },
+  })
 
-  if (!content) {
+  const content = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}${process.env.__NEXT_BASE_PATH}${cabinet?.htmlhref}`|| "").then(res => res.ok ? res.text() : null);
+
+  if (!content || !cabinet?.htmlhref) {
     notFound()
   }
 

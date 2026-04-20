@@ -60,11 +60,15 @@ const Navbar = ({ className, lang }: Navbar1Props) => {
         },
         {
           title: t.college,
-          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/news/all`,
+          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/news/college`,
         },
         {
           title: t.event,
-          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/news/all`,
+          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/news/event`,
+        },
+        {
+          title: t.other,
+          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/news/other`,
         },
       ],
     },
@@ -73,12 +77,16 @@ const Navbar = ({ className, lang }: Navbar1Props) => {
       url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/docs`,
       items: [
         {
-          title: t.constitution,
-          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/docs/constitution`,
+          title: "Learn",
+          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/docs/learn`,
         },
         {
           title: t.archive,
           url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/docs/archive`,
+        },
+        {
+          title: t.constitution,
+          url: `${process.env.NEXT_PUBLIC_BASE_PATH}/soc_web/docs/constitution`,
         },
       ],
     },

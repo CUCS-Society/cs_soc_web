@@ -1237,7 +1237,7 @@ function RowDragHandle({ dragRef }: { dragRef: React.Ref<HTMLElement> }) {
 
   return (
     <Button
-      ref={dragRef}
+      ref={dragRef as React.Ref<HTMLButtonElement>}
       variant="outline"
       className={cn(
         "absolute top-1/2 left-0 z-51 h-6 w-4 -translate-y-1/2 p-0 focus-visible:ring-0 focus-visible:ring-offset-0",

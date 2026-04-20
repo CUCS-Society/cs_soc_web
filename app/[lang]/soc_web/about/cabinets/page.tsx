@@ -1,6 +1,9 @@
 import { BreadcrumbPlugin } from "@/components/soc_web/BreadcrumbPlugin"
 import { Dictionary } from "@/components/soc_web/Translation"
-import Link from "next/link"
+import CabinetPageClient from "./page-client"
+import { prisma } from "@/lib/prisma"
+import { auth } from "@/lib/auth/auth"
+import { headers } from "next/headers"
 
 interface PageProps {
   params: Promise<{
@@ -8,77 +11,36 @@ interface PageProps {
   }>
 }
 
-interface CabinetPreviewProps {
-  year: string
-  name: string
-  t: Record<string, string>
-}
-
-function CabinetPreview({ year, name, t }: CabinetPreviewProps) {
-  const index = Number(year) - 1978
-  const ordinal = `${index}th`
-  const href = `/soc_web/about/cabinets/${year}`
-  const iconSrc = `${process.env.__NEXT_BASE_PATH}/doc/${index}th_${year}/logo_${index}.png`
-
-  return (
-    <Link href={href}>
-      <div className="flex items-center gap-4 rounded-lg border p-4 shadow-sm">
-        <div className="relative h-12 w-12">
-          <img
-            src={iconSrc}
-            alt={`${name}${t.logoAlt}`}
-            sizes="48px"
-            className="object-contain"
-          />
-        </div>
-        <div>
-          <div className="font-semibold">{name}</div>
-          <div>
-            {ordinal}
-            {t.cabinet}
-          </div>
-          <div className="text-sm text-gray-500">cabinets/{ordinal}</div>
-        </div>
-      </div>
-    </Link>
-  )
-}
-
-const CabinetsPropsList = [
-  {
-    year: "2025",
-    name: "Cohaesio",
-  },
-  {
-    year: "2024",
-    name: "IDK",
-  },
-]
-
-export default async function Page({ params }: PageProps) {
+export default async function Page( { params }: PageProps) {
   const { lang } = await params
-  const t = Dictionary[lang]
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  })
+
+  const cabinets = await prisma.cabinet.findMany({
+    orderBy: {
+      year: "desc",
+    },
+  })
+
+  console.log(session?.user?.id);
 
   return (
     <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
       <BreadcrumbPlugin
         items={[
-          { label: t.home, href: `./..` },
-          { label: t.about, href: `.` },
-          { label: t.pastCabinets, href: `.` },
+          { label: Dictionary[lang].home, href: `./..` },
+          { label: Dictionary[lang].about, href: `.` },
+          { label: Dictionary[lang].pastCabinets, href: `.` },
         ]}
       />
 
-      {CabinetsPropsList.map((Cabinet) => {
-        return (
-          <CabinetPreview
-            key={Cabinet.year}
-            year={Cabinet.year}
-            name={Cabinet.name}
-            t={t}
-          />
-        )
-      })}
+      <CabinetPageClient
+        lang={lang}
+        cabinets={cabinets}
+        isLoggedIn={Boolean(session?.user?.id)}
+      />
     </div>
   )
 }

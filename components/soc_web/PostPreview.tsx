@@ -9,6 +9,7 @@ import { headers } from "next/headers"
 import { auth } from "@/lib/auth/auth"
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DeletePostDialog } from "./DeletePostDialog"
 
 type PostPreviewProps = {
   post: Post
@@ -62,8 +63,10 @@ const PostPreview = async ({ post, showEdit }: PostPreviewProps) => {
           className="flex h-full w-full items-center justify-center"
         >
           <PencilLine className="h-[1.2rem] w-[1.2rem] scale-100" />
+          <span className="sr-only">Update Post</span>
         </Link>
       </Button>
+      <DeletePostDialog postId={post.id} />
     </article>
   )
 }

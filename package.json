@@ -14,6 +14,13 @@
   "dependencies": {
     "@ai-sdk/react": "^3.0.160",
     "@ariakit/react": "^0.4.25",
+    "@embedpdf/core": "^2.14.0",
+    "@embedpdf/engines": "^2.14.0",
+    "@embedpdf/plugin-document-manager": "^2.14.0",
+    "@embedpdf/plugin-render": "^2.14.0",
+    "@embedpdf/plugin-scroll": "^2.14.0",
+    "@embedpdf/plugin-viewport": "^2.14.0",
+    "@embedpdf/plugin-zoom": "^2.14.0",
     "@emoji-mart/data": "1.2.1",
     "@faker-js/faker": "^10.4.0",
     "@platejs/ai": "^52.3.22",
@@ -118,5 +125,4 @@
       "prisma"
     ]
   }
-
 }

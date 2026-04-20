@@ -42,9 +42,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       >
         <ThemeProvider>
           <Header lang={lang} />
-          <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
-            {children}
-          </div>
+          {children}
           <Footer />
         </ThemeProvider>
       </body>

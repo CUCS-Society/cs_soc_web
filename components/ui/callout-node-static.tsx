@@ -16,7 +16,7 @@ export function CalloutElementStatic({
       className={cn("my-1 flex rounded-sm bg-muted p-4 pl-3", className)}
       style={{
         backgroundColor: props.element
-          .backgroundColor as Property.BackgroundColor,
+          .backgroundColor as string | undefined,
       }}
       {...props}
     >
