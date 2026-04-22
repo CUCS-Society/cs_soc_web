@@ -3,28 +3,33 @@ import { CreateCabinetDialog } from "@/components/ui/create-cabinet-dialog"
 import { Card, CardContent } from "@/components/ui/card"
 import { Cabinet } from "@/generated/prisma/client"
 import { PlusIcon } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 function CabinetPreview({ lang, cabinet }: { lang: string; cabinet: Cabinet }) {
   const ordinal = `${cabinet.editionNumber}th`
   const basePath = process.env.__NEXT_BASE_PATH ?? ""
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
 
   const href = `/soc_web/about/cabinets/${cabinet.year}`
 
   const iconSrc = cabinet.iconSrc
-    ? `${basePath}${cabinet.iconSrc}`
-    : `${basePath}/doc/${cabinet.editionNumber}th_${cabinet.year}/logo_${cabinet.editionNumber}.png`
+    ? `${baseUrl}${basePath}${cabinet.iconSrc}`
+    : `${baseUrl}${basePath}/doc/${cabinet.editionNumber}th_${cabinet.year}/logo_${cabinet.editionNumber}.png`
 
   return (
     <Link href={href}>
       <div className="flex items-center gap-4 rounded-lg border p-4 shadow-sm">
         <div className="relative h-12 w-12">
-          <img
-            src={iconSrc}
-            alt={`${cabinet.zhName || cabinet.enName || "No name"}`}
-            sizes="48px"
-            className="object-contain"
+
+
+          <Image
+              src={iconSrc}
+              alt={`${cabinet.zhName || cabinet.enName || "No name"}`}
+              width={48}
+              height={48}
           />
+
         </div>
         <div>
           <div className="font-semibold">{cabinet.zhName || cabinet.enName || "No name"}</div>

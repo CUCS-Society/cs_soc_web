@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 
+import Image from "next/image"
+
 export function CarouselPlugin() {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: true })
@@ -18,7 +20,7 @@ export function CarouselPlugin() {
 
   const banners = [
     {
-      src: `${process.env.NEXT_PUBLIC_BASE_PATH}/doc/48th_2026/banner.png`,
+      src: `${process.env.NEXT_PUBLIC_SITE_URL}${process.env.NEXT_PUBLIC_BASE_PATH}/doc/48th_2026/banner.png`,
       alt: "2026 banner",
     },
   ]
@@ -36,10 +38,12 @@ export function CarouselPlugin() {
             <div className="p-1">
               <div className="relative w-full overflow-hidden">
                 <div className="relative aspect-[16/9] w-full">
-                  <img
+                  <Image
                     src={banner.src}
                     alt={banner.alt}
-                    className="object-cover"
+
+                    width={800}
+                    height={400}
                   />
                 </div>
               </div>
