@@ -102,7 +102,6 @@ export default function CreatePostPage() {
       )
 
       if (response.ok) {
-        console.log("Post created successfully!")
         router.push(`/soc_web/news/${formData.category}/${formData.slug}`)
       } else {
         console.error("Failed to create post")

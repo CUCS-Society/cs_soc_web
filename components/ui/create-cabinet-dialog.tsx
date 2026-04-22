@@ -29,7 +29,19 @@ export function CreateCabinetDialog({
 
     startTransition(async () => {
       try {
-        await createCabinet(formData)
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}/api/cabinets`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.error || "Failed to create cabinet")
+        }
+        
         form.reset()
         setOpen(false)
       } catch (err) {

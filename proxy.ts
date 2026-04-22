@@ -8,8 +8,6 @@ function getLocale(request: NextRequest) {
   const languages =
     request.headers.get("accept-language")?.split(",")[0] || defaultLocale
 
-  console.log("Referer:", referer)
-
   if (referer) {
     for (const locale of locales) {
       if (

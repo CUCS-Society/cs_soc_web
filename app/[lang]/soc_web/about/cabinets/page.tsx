@@ -24,8 +24,6 @@ export default async function Page( { params }: PageProps) {
     },
   })
 
-  console.log(session?.user?.id);
-
   return (
     <div className="p-10 lg:w-1/2">
       <BreadcrumbPlugin

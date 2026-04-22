@@ -9,7 +9,7 @@ export function Footer() {
             <p className="mb-1 font-medium">
               © 2014-2026 CUHK Computer Science Society
             </p>
-            <p className="text-xs">Powered by modern design</p>
+            <p className="text-xs"> © 2014-2026 香港中文大學學生會計算機科學系會 版權所有</p>
           </div>
           <div className="flex gap-4">
             <a
