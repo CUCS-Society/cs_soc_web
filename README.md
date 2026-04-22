@@ -39,3 +39,9 @@
 - Bug fixing
 - README.md
 - Finish Authentication
+
+## Optimizaton
+Analysis: <https://pagespeed.web.dev/analysis/https-appsrv-cse-cuhk-edu-hk-~cscs-en-US-soc_web/ytowujcf4y?form_factor=desktop>
+- Divide page.tsx and page-client.tsx
+- Loading.tsx + Suspend
+

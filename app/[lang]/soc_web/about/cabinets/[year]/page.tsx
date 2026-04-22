@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation"
 import { BreadcrumbPlugin } from "@/components/soc_web/BreadcrumbPlugin"
-import { readFile } from "fs/promises"
-import path from "path"
 import { Dictionary } from "@/components/soc_web/Translation"
 import { prisma } from "@/lib/prisma"
 
