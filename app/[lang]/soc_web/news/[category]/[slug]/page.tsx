@@ -38,12 +38,15 @@ export default async function PostPage({ params }: PostProps) {
 
   const post = await prisma.post.findUnique({
     where: { slug },
+    include: {
+      author: true,
+    }
   })
 
   if (!post) notFound()
 
   return (
-    <div>
+    <div className="p-10">
       <BreadcrumbPlugin
         items={[
           { label: t.home, href: `` },
@@ -57,9 +60,13 @@ export default async function PostPage({ params }: PostProps) {
       />
 
       <article className="prose dark:prose-invert max-w-none">
-        <h1 className="mb-3 text-5xl tracking-tighter text-pretty md:mb-4 lg:mb-6 lg:max-w-3xl lg:text-7xl">
+        <h1 className="text-2xl tracking-tighter text-pretty lg:text-5xl p-5 text-center w-1/2 justify-self-center mx-auto">
           {post.title}
         </h1>
+
+        <p className="text-sm text-muted-foreground">
+          Written by {post.author?.name}
+        </p>
         <p className="text-sm text-muted-foreground">
           <time dateTime={post.createdAt.toDateString()}>
             {post.createdAt.toDateString()}

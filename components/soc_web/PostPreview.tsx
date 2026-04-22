@@ -37,7 +37,7 @@ const PostPreview = async ({ post, showEdit }: PostPreviewProps) => {
         </div>
 
         <div className="min-w-0 flex-1 p-4">
-          <h3 className="my-2 text-2xl font-bold text-foreground">
+          <h3 className="my-2 font-bold text-foreground">
             {post.title}
           </h3>
           <div className="flex gap-2 text-sm leading-snug text-muted-foreground">

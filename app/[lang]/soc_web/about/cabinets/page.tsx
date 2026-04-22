@@ -27,7 +27,7 @@ export default async function Page( { params }: PageProps) {
   console.log(session?.user?.id);
 
   return (
-    <div className="mx-auto w-[90%] max-w-none py-10 lg:w-1/2">
+    <div className="p-10 lg:w-1/2">
       <BreadcrumbPlugin
         items={[
           { label: Dictionary[lang].home, href: `./..` },
