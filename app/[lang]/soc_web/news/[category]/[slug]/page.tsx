@@ -12,11 +12,6 @@ interface PostProps {
   }>
 }
 
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany()
-  return posts.map((post) => ({ slug: post.slug }))
-}
-
 export async function generateMetadata({
   params,
 }: PostProps): Promise<Metadata> {
